@@ -1,14 +1,32 @@
-const {_getAllMenu} = require('../models/menu')
+const {_getAllMenu, _insertMenu} = require('../models/menu')
 const { response } = require('../helpers/helpers')
 
 module.exports = {
-  getAllMenu: (_req, res) => {
+  getAllMenu: (_req, resp) => {
     _getAllMenu()
-    .then((result) => {
-      response(res, result, 200, null)
+    .then((res) => {
+      response(resp, res, 200, null)
     })
     .catch((err) => {
       console.log(err);
+    })
+  },
+  insertMenu: (req, resp) => {
+    const {name, price, description, image} = req.body
+    const data = {
+      name,
+      price,
+      description,
+      image,
+      created_at: null,
+      updated_at: null
+    }
+    _insertMenu(data)
+    .then((res) => {
+      response(resp, res, 200, null)
+    })
+    .catch((err) => {
+      console.log(err)
     })
   }
 }
