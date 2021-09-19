@@ -3,7 +3,7 @@ module.exports = {
     const resultPrint = {}
     resultPrint.status = 'Success'
     resultPrint.status_code = status
-    resultPrint.result = result
+    resultPrint.result = result.rows
     resultPrint.err = err || null
     return res.status(resultPrint.status_code).json(resultPrint)
   }
