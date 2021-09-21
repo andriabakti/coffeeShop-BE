@@ -18,7 +18,7 @@ module.exports = {
       price,
       description,
       image,
-      created_at: null,
+      created_at: new Date(),
       updated_at: null
     }
     _insertMenu(data)
