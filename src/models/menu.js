@@ -1,31 +1,14 @@
-const connection = require('../configs/db')
+const {actionQuery} = require('../helpers/helpers')
 
 module.exports = {
   _getAllMenu: () => {
-    return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM menu', (err, result) => {
-        if(!err) {
-          resolve(result)
-        } else {
-          reject(new Error(err))
-        }
-      })
-    })
+    return actionQuery('SELECT * FROM menu')
   },
-  _insertMenu: (data) => {
-    const {name, price, description, image, created_at, updated_at} = data
+  _insertMenu: ({name, price, description, image, created_at, updated_at}) => {
     const queryData = {
       text: 'INSERT INTO menu(name, price, description, image, created_at, updated_at) VALUES($1, $2, $3, $4, $5, $6)',
       values: [name, price, description, image, created_at, updated_at]
     }
-    return new Promise((resolve, reject) => {
-      connection.query(queryData, (err, result) => {
-        if(!err) {
-          resolve(result)
-        } else {
-          reject(new Error(err))
-        }
-      })
-    })
+    return actionQuery(queryData)
   }
 }
