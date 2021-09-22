@@ -2,11 +2,11 @@
   "name": "coffeeshop-app",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/App.js",
+  "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/App.js",
-    "dev": "nodemon ./src/App.js"
+    "start": "node App.js",
+    "dev": "nodemon App.js"
   },
   "keywords": [],
   "author": "Andria Bakti Mahendra",
@@ -16,6 +16,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.12",
     "pg": "^8.7.1"
   }
 }
