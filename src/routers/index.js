@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const menuRoutes = require('./menu')
-const route = Router();
+const route = Router()
 
-module.exports = route
-  .use('/menu', menuRoutes)
+module.exports = route.use('/menu', menuRoutes)
