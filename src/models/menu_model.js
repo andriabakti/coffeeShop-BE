@@ -1,4 +1,4 @@
-const { actionQuery } = require('../helpers/helpers')
+const { actionQuery } = require('../helpers/query')
 
 module.exports = {
 	_insertMenu: ({ name, price, description, image, created_at }) => {
@@ -8,11 +8,21 @@ module.exports = {
 		}
 		return actionQuery(queryData)
 	},
-	_getAllMenu: () => {
-		return actionQuery('SELECT * FROM menu')
+	_getAllMenu: (search, sort, order, limit, offset) => {
+		return actionQuery(
+			`SELECT * FROM menu ${
+				search ? `WHERE menu.name LIKE %${search}%` : ''
+			} ORDER BY ${sort} ${order} LIMIT ${limit} OFFSET ${offset}`
+		)
 	},
 	_getMenuById: (id) => {
 		return actionQuery('SELECT * FROM menu WHERE menu_id = $1', [id])
+	},
+	_getSearch: (search) => {
+		return actionQuery('SELECT * FROM menu WHERE name LIKE', [`%${search}%`])
+	},
+	_getTotal: () => {
+		return actionQuery('SELECT COUNT(*) AS total FROM menu')
 	},
 	_updateMenu: ({ name, price, description, image, updated_at }, id) => {
 		const queryData = {

@@ -3,9 +3,11 @@ const {
 	_getAllMenu,
 	_getMenuById,
 	_updateMenu,
-	_deleteMenu
-} = require('../models/menu')
-const { response } = require('../helpers/helpers')
+	_deleteMenu,
+	_getSearch,
+	_getTotal
+} = require('../models/menu_model')
+const { response, status, pageInfo, errors } = require('../helpers/helpers')
 
 module.exports = {
 	insertMenu: (req, res) => {
@@ -25,13 +27,41 @@ module.exports = {
 				console.log(error.message)
 			})
 	},
-	getAllMenu: (_req, res) => {
-		_getAllMenu()
+	getAllMenu: (req, res) => {
+		const limit = req.query.limit || 12
+		const page = !req.query.page ? 1 : req.query.page
+		const offset = (page === 0 ? 1 : page - 1) * limit
+		const search = req.query.search || null
+		const sort = req.query.sort || 'menu_id'
+		const order = req.query.order || 'ASC'
+		let totalData
+
+		if (search) {
+			_getSearch(search)
+				.then((result) => {
+					totalData = result.rows.length
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		} else {
+			_getTotal()
+				.then((result) => {
+					totalData = result.rows[0].total
+				})
+				.catch((error) => {
+					console.log(error.message)
+				})
+		}
+		_getAllMenu(search, sort, order, limit, offset)
 			.then((result) => {
-				response(res, result, 200, null)
+				const count = result.rows.length
+				const total = totalData
+				const links = pageInfo(limit, page, total, count)
+				response(res, result, 200, status.found, links, null)
 			})
 			.catch((error) => {
-				console.log(error.message)
+				response(res, [], errors.statusCode, null, null, error)
 			})
 	},
 	getMenuById: (req, res) => {
