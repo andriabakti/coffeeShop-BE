@@ -5,7 +5,7 @@ const {
 	getMenuById,
 	updateMenu,
 	deleteMenu
-} = require('../controllers/menu')
+} = require('../controllers/menu_controller')
 const routes = Router()
 
 module.exports = routes
