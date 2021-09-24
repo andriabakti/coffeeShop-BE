@@ -8,7 +8,7 @@ const {
 const { response } = require('../helpers/helpers')
 
 module.exports = {
-	insertMenu: (req, resp) => {
+	insertMenu: (req, res) => {
 		const { name, price, description, image } = req.body
 		const data = {
 			name,
@@ -18,33 +18,33 @@ module.exports = {
 			created_at: new Date()
 		}
 		_insertMenu(data)
-			.then((res) => {
-				response(resp, res, 200, null)
+			.then((result) => {
+				response(res, result, 200, null)
 			})
-			.catch((err) => {
-				console.log(err.message)
+			.catch((error) => {
+				console.log(error.message)
 			})
 	},
-	getAllMenu: (_req, resp) => {
+	getAllMenu: (_req, res) => {
 		_getAllMenu()
-			.then((res) => {
-				response(resp, res, 200, null)
+			.then((result) => {
+				response(res, result, 200, null)
 			})
-			.catch((err) => {
-				console.log(err.message)
+			.catch((error) => {
+				console.log(error.message)
 			})
 	},
-	getMenuById: (req, resp) => {
+	getMenuById: (req, res) => {
 		const { id } = req.params
 		_getMenuById(id)
-			.then((res) => {
-				response(resp, res, 200, null)
+			.then((result) => {
+				response(res, result, 200, null)
 			})
-			.catch((err) => {
-				console.log(err.message)
+			.catch((error) => {
+				console.log(error.message)
 			})
 	},
-	updateMenu: (req, resp) => {
+	updateMenu: (req, res) => {
 		const { id } = req.params
 		const { name, price, description, image } = req.body
 		const data = {
@@ -55,21 +55,21 @@ module.exports = {
 			updated_at: new Date()
 		}
 		_updateMenu(data, id)
-			.then((res) => {
-				response(resp, res, 200, null)
+			.then((result) => {
+				response(res, result, 200, null)
 			})
-			.catch((err) => {
-				console.log(err.message)
+			.catch((error) => {
+				console.log(error.message)
 			})
 	},
-	deleteMenu: (req, resp) => {
+	deleteMenu: (req, res) => {
 		const { id } = req.params
 		_deleteMenu(id)
-			.then((res) => {
-				response(resp, res, 200, null)
+			.then((result) => {
+				response(res, result, 200, null)
 			})
-			.catch((err) => {
-				console.log(err.message)
+			.catch((error) => {
+				console.log(error.message)
 			})
 	}
 }
