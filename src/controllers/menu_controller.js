@@ -7,7 +7,7 @@ const {
 	_getSearch,
 	_getTotal
 } = require('../models/menu_model')
-const { response, status, pageInfo, errors } = require('../helpers/helpers')
+const { response, status, pageInfo } = require('../helpers/helpers')
 
 module.exports = {
 	insertMenu: (req, res) => {
@@ -24,7 +24,7 @@ module.exports = {
 				response(res, {}, res.statusCode, status.insert, null, null)
 			})
 			.catch((error) => {
-				response(res, [], err.statusCode, null, null, error)
+				response(res, [], error.status_code, null, null, error)
 			})
 	},
 	getAllMenu: (req, res) => {
@@ -60,7 +60,7 @@ module.exports = {
 				response(res, result.rows, res.statusCode, status.found, links, null)
 			})
 			.catch((error) => {
-				response(res, [], error.statusCode, error.sqlMessage, null, error)
+				response(res, [], error.status_code, null, null, error)
 			})
 	},
 	getMenuById: (req, res) => {
@@ -70,7 +70,7 @@ module.exports = {
 				response(res, result.rows[0], res.statusCode, status.found, null, null)
 			})
 			.catch((error) => {
-				response(res, {}, error.statusCode, error.sqlMessage, null, error)
+				response(res, {}, error.status_code, null, null, error)
 			})
 	},
 	updateMenu: (req, res) => {
@@ -88,7 +88,7 @@ module.exports = {
 				response(res, {}, res.statusCode, status.update, null, null)
 			})
 			.catch((error) => {
-				console.log(res, {}, error.statusCode, null, null, error)
+				console.log(res, {}, error.status_code, null, null, error)
 			})
 	},
 	deleteMenu: (req, res) => {
@@ -98,7 +98,7 @@ module.exports = {
 				response(res, {}, res.statusCode, status.delete, null, null)
 			})
 			.catch((error) => {
-				console.log(res, {}, error.statusCode, null, null, error)
+				console.log(res, {}, error.status_code, null, null, error)
 			})
 	}
 }
