@@ -5,18 +5,19 @@ module.exports = {
 	actionQuery: (...arg) => {
 		return new Promise((resolve, reject) => {
 			conn.query(...arg, (err, res) => {
-				// if (err || res.rowCount <= 0) {
-				if (res.rowCount <= 0) {
-					const objError = errors.notFound
-					reject(objError)
-					// } else {
-					// }
-					// reject(new Error(err))
+				if (!err) {
+					if (res.rowCount <= 0) {
+						const objError = errors.notFound
+						reject(objError)
+					} else {
+						resolve(res)
+					}
 				} else {
-					resolve(res)
-					// const objError = {
-					// ...err
-					// statusCode: errors.checkStatusCode(err.errno)
+					const objError = {
+						...err,
+						statusCode: errors.checkStatusCode(err.errno)
+					}
+					reject(objError)
 				}
 			})
 		})
