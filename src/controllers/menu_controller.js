@@ -20,73 +20,57 @@ module.exports = {
 			created_at: new Date()
 		}
 		_insertMenu(data)
-			.then((result) => {
-				response(res, result, res.statusCode, status.insert, null, null)
+			.then((_result) => {
+				response(res, {}, res.statusCode, status.insert, null, null)
 			})
 			.catch((error) => {
 				response(res, [], err.statusCode, null, null, error)
 			})
 	},
 	getAllMenu: (req, res) => {
-		const limit = req.query.limit || 5
-		const page = !req.query.page ? 1 : req.query.page
-		const offset = (page === 0 ? 1 : page - 1) * limit
 		const search = req.query.search || null
 		const sort = req.query.sort || 'menu_id'
 		const order = req.query.order || 'ASC'
+		const limit = Number(req.query.limit) || 3
+		const page = Number(req.query.page) || 1
+		const offset = (page === 0 ? 1 : page - 1) * limit
 
 		if (search) {
 			_getSearch(search)
 				.then((result) => {
-					totalData = result.rows.length
+					totalData = result.rowCount
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		} else {
+			_getTotal()
+				.then((result) => {
+					totalData = result.rows[0].total
 				})
 				.catch((error) => {
 					console.log(error)
 				})
 		}
-		// else {
-		// 	_getTotal()
-		// 		.then((result) => {
-		// 			totalData = result.rows[0].total
-		// 		})
-		// 		.catch((error) => {
-		// 			console.log(error.message)
-		// 		})
-		// }
 		_getAllMenu(search, sort, order, limit, offset)
 			.then((result) => {
-				const count = result.rows.length
-				const total = result.rowCount
+				const count = result.rowCount
+				const total = parseInt(totalData)
 				const links = pageInfo(limit, page, total, count)
-				response(res, result.rows, 200, status.found, links, null)
+				response(res, result.rows, res.statusCode, status.found, links, null)
 			})
 			.catch((error) => {
-				response(
-					res,
-					[],
-					errors.notFound.statusCode,
-					errors.notFound.sqlMessage,
-					null,
-					error
-				)
+				response(res, [], error.statusCode, error.sqlMessage, null, error)
 			})
 	},
 	getMenuById: (req, res) => {
 		const { id } = req.params
 		_getMenuById(id)
 			.then((result) => {
-				response(res, result.rows[0], 200, status.found, null, null)
+				response(res, result.rows[0], res.statusCode, status.found, null, null)
 			})
 			.catch((error) => {
-				console.log(error)
-				response(
-					res,
-					[],
-					errors.notFound.statusCode,
-					errors.notFound.sqlMessage,
-					null,
-					error
-				)
+				response(res, {}, error.statusCode, error.sqlMessage, null, error)
 			})
 	},
 	updateMenu: (req, res) => {
@@ -100,21 +84,21 @@ module.exports = {
 			updated_at: new Date()
 		}
 		_updateMenu(data, id)
-			.then((result) => {
-				response(res, result, 200, null)
+			.then((_result) => {
+				response(res, {}, res.statusCode, status.update, null, null)
 			})
 			.catch((error) => {
-				console.log(error.message)
+				console.log(res, {}, error.statusCode, null, null, error)
 			})
 	},
 	deleteMenu: (req, res) => {
 		const { id } = req.params
 		_deleteMenu(id)
-			.then((result) => {
-				response(res, result, 200, null)
+			.then((_result) => {
+				response(res, {}, res.statusCode, status.delete, null, null)
 			})
 			.catch((error) => {
-				console.log(error.message)
+				console.log(res, {}, error.statusCode, null, null, error)
 			})
 	}
 }

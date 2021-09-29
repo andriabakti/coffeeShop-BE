@@ -2,22 +2,13 @@ module.exports = {
 	response: (res, result, status, message, links, error) => {
 		const resultPrint = {}
 		resultPrint.success = !error
-		resultPrint.statusCode = status
+		resultPrint.status_code = status || null
 		if (message) {
-			resultPrint.message = message
+			resultPrint.message = message || null
 		}
-		resultPrint.result = result
+		resultPrint.data = result
 		if (links) {
-			resultPrint.pageInfo = {}
-			resultPrint.pageInfo.total = links.total
-			resultPrint.pageInfo.per_page = links.per_page
-			resultPrint.pageInfo.count = links.count
-			resultPrint.pageInfo.current_page = links.current_page
-			resultPrint.pageInfo.total_pages = links.total_pages
-			resultPrint.pageInfo.links = links.links
-		}
-		if (error) {
-			resultPrint.error = error.message || null
+			resultPrint.page_info = links
 		}
 		return res.status(status).json(resultPrint)
 	},
@@ -28,21 +19,18 @@ module.exports = {
 		delete: 'Data successfully deleted'
 	},
 	pageInfo: (limit, start, total, count) => {
-		const last = Math.ceil(total / limit)
 		const numStart = start === 0 ? 1 : start
+		const last = Math.ceil(total / limit)
 		const result = {
-			per_page: limit,
-			count: count,
-			total: total,
+			total_page: last ? last : 1,
 			current_page: numStart,
-			total_pages: last ? last : 1,
-			links: {
-				self: numStart,
-				next: count < limit || numStart === last ? null : numStart + 1,
-				prev: numStart === 0 || numStart === 1 ? null : numStart - 1,
-				first: numStart === 1 ? null : 1,
-				last: numStart === last ? null : last
-			}
+			next_page: count < limit || numStart === last ? null : numStart + 1,
+			prev_page: numStart === 0 || numStart === 1 ? null : numStart - 1,
+			first_page: numStart === 1 ? null : 1,
+			last_page: numStart === last ? null : last,
+			total_item: total,
+			per_page: limit,
+			count: count
 		}
 		return result
 	},
