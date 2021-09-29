@@ -2,9 +2,11 @@ module.exports = {
 	response: (res, result, status, message, links, error) => {
 		const resultPrint = {}
 		resultPrint.success = !error
-		resultPrint.status_code = status || null
-		if (message) {
+		if (!error) {
+			resultPrint.status_code = status || null
 			resultPrint.message = message || null
+		} else {
+			resultPrint.error = error
 		}
 		resultPrint.data = result
 		if (links) {
@@ -36,9 +38,8 @@ module.exports = {
 	},
 	errors: {
 		notFound: {
-			code: 'ERR_NOT_FOUND',
-			statusCode: 404,
-			sqlMessage: 'Data Not Found'
+			status_code: 404,
+			message: 'Data Not Found'
 		},
 		checkStatusCode: (errorCode) => {
 			const errorCodes = Number(errorCode)
