@@ -1,23 +1,24 @@
 module.exports = {
-	response: (res, result, status, message, pageInfo, error) => {
+	response: (res, result, status, message, links, error) => {
 		const resultPrint = {}
-		if (pageInfo) {
-			resultPrint.total = pageInfo.total
-			resultPrint.per_page = pageInfo.per_page
-			resultPrint.count = pageInfo.count
-			resultPrint.current_page = pageInfo.current_page
-			resultPrint.total_pages = pageInfo.total_pages
-			resultPrint.links = pageInfo.links
-		}
 		resultPrint.success = !error
-		resultPrint.status_code = status
-		if (error) {
-			resultPrint.err = err || null
-		}
+		resultPrint.statusCode = status
 		if (message) {
 			resultPrint.message = message
 		}
-		resultPrint.result = result.rows
+		resultPrint.result = result
+		if (links) {
+			resultPrint.pageInfo = {}
+			resultPrint.pageInfo.total = links.total
+			resultPrint.pageInfo.per_page = links.per_page
+			resultPrint.pageInfo.count = links.count
+			resultPrint.pageInfo.current_page = links.current_page
+			resultPrint.pageInfo.total_pages = links.total_pages
+			resultPrint.pageInfo.links = links.links
+		}
+		if (error) {
+			resultPrint.error = error.message || null
+		}
 		return res.status(status).json(resultPrint)
 	},
 	status: {

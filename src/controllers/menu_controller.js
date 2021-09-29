@@ -21,20 +21,19 @@ module.exports = {
 		}
 		_insertMenu(data)
 			.then((result) => {
-				response(res, result, 200, null)
+				response(res, result, res.statusCode, status.insert, null, null)
 			})
 			.catch((error) => {
-				console.log(error.message)
+				response(res, [], err.statusCode, null, null, error)
 			})
 	},
 	getAllMenu: (req, res) => {
-		const limit = req.query.limit || 12
+		const limit = req.query.limit || 5
 		const page = !req.query.page ? 1 : req.query.page
 		const offset = (page === 0 ? 1 : page - 1) * limit
 		const search = req.query.search || null
 		const sort = req.query.sort || 'menu_id'
 		const order = req.query.order || 'ASC'
-		let totalData
 
 		if (search) {
 			_getSearch(search)
@@ -44,34 +43,50 @@ module.exports = {
 				.catch((error) => {
 					console.log(error)
 				})
-		} else {
-			_getTotal()
-				.then((result) => {
-					totalData = result.rows[0].total
-				})
-				.catch((error) => {
-					console.log(error.message)
-				})
 		}
+		// else {
+		// 	_getTotal()
+		// 		.then((result) => {
+		// 			totalData = result.rows[0].total
+		// 		})
+		// 		.catch((error) => {
+		// 			console.log(error.message)
+		// 		})
+		// }
 		_getAllMenu(search, sort, order, limit, offset)
 			.then((result) => {
 				const count = result.rows.length
-				const total = totalData
+				const total = result.rowCount
 				const links = pageInfo(limit, page, total, count)
-				response(res, result, 200, status.found, links, null)
+				response(res, result.rows, 200, status.found, links, null)
 			})
 			.catch((error) => {
-				response(res, [], errors.statusCode, null, null, error)
+				response(
+					res,
+					[],
+					errors.notFound.statusCode,
+					errors.notFound.sqlMessage,
+					null,
+					error
+				)
 			})
 	},
 	getMenuById: (req, res) => {
 		const { id } = req.params
 		_getMenuById(id)
 			.then((result) => {
-				response(res, result, 200, null)
+				response(res, result.rows[0], 200, status.found, null, null)
 			})
 			.catch((error) => {
-				console.log(error.message)
+				console.log(error)
+				response(
+					res,
+					[],
+					errors.notFound.statusCode,
+					errors.notFound.sqlMessage,
+					null,
+					error
+				)
 			})
 	},
 	updateMenu: (req, res) => {
