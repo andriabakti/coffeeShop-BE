@@ -88,7 +88,7 @@ module.exports = {
 				response(res, {}, res.statusCode, status.update, null, null)
 			})
 			.catch((error) => {
-				console.log(res, {}, error.status_code, null, null, error)
+				response(res, {}, error.status_code, null, null, error)
 			})
 	},
 	deleteMenu: (req, res) => {
@@ -98,7 +98,7 @@ module.exports = {
 				response(res, {}, res.statusCode, status.delete, null, null)
 			})
 			.catch((error) => {
-				console.log(res, {}, error.status_code, null, null, error)
+				response(res, {}, error.status_code, null, null, error)
 			})
 	}
 }

@@ -1,4 +1,4 @@
-node_modules/*
-*.example.md
+node_modules
+*.example.mds
 .env
 .todo
