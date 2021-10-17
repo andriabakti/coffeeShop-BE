@@ -38,7 +38,7 @@ module.exports = {
 		if (search) {
 			_getSearch(search)
 				.then((result) => {
-					totalData = result.rowCount
+					totalData = result.length
 				})
 				.catch((error) => {
 					console.log(error)
@@ -46,7 +46,7 @@ module.exports = {
 		} else {
 			_getTotal()
 				.then((result) => {
-					totalData = result.rows[0].total
+					totalData = result[0].total
 				})
 				.catch((error) => {
 					console.log(error)
@@ -54,10 +54,10 @@ module.exports = {
 		}
 		_getAllMenu(search, sort, order, limit, offset)
 			.then((result) => {
-				const count = result.rowCount
+				const count = result.length
 				const total = parseInt(totalData)
 				const links = pageInfo(limit, page, total, count)
-				response(res, result.rows, res.statusCode, status.found, links, null)
+				response(res, result, res.statusCode, status.found, links, null)
 			})
 			.catch((error) => {
 				response(res, [], error.status_code, null, null, error)
@@ -67,7 +67,7 @@ module.exports = {
 		const { id } = req.params
 		_getMenuById(id)
 			.then((result) => {
-				response(res, result.rows[0], res.statusCode, status.found, null, null)
+				response(res, result, res.statusCode, status.found, null, null)
 			})
 			.catch((error) => {
 				response(res, {}, error.status_code, null, null, error)
