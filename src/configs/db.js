@@ -1,6 +1,6 @@
-const { Pool } = require('pg')
+const { createPool } = require('mysql')
 
-const pool = new Pool({
+const pool = createPool({
 	user: process.env.DB_USER,
 	host: process.env.DB_HOST,
 	database: process.env.DB_DATABASE,
