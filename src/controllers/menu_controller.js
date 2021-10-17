@@ -11,11 +11,12 @@ const { response, status, pageInfo } = require('../helpers/helpers')
 
 module.exports = {
 	insertMenu: (req, res) => {
-		const { name, price, description, image } = req.body
+		const { name, price, description, category_id, image } = req.body
 		const data = {
 			name,
 			price,
 			description,
+			category_id,
 			image,
 			created_at: new Date()
 		}
@@ -75,11 +76,12 @@ module.exports = {
 	},
 	updateMenu: (req, res) => {
 		const { id } = req.params
-		const { name, price, description, image } = req.body
+		const { name, price, description, category_id, image } = req.body
 		const data = {
 			name,
 			price,
 			description,
+			category_id,
 			image,
 			updated_at: new Date()
 		}
