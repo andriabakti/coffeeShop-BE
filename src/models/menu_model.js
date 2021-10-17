@@ -1,12 +1,8 @@
 const { actionQuery } = require('../helpers/query')
 
 module.exports = {
-	_insertMenu: ({ name, price, description, image, created_at }) => {
-		const queryData = {
-			text: 'INSERT INTO menu(name, price, description, image, created_at) VALUES($1, $2, $3, $4, $5)',
-			values: [name, price, description, image, created_at]
-		}
-		return actionQuery(queryData)
+	_insertMenu: (data) => {
+		return actionQuery('INSERT INTO menu SET ?', data)
 	},
 	_getAllMenu: (search, sort, order, limit, offset) => {
 		return actionQuery(
@@ -16,22 +12,18 @@ module.exports = {
 		)
 	},
 	_getMenuById: (id) => {
-		return actionQuery('SELECT * FROM menu WHERE menu_id = $1', [id])
+		return actionQuery('SELECT menu.* FROM menu WHERE menu_id = ?', id)
 	},
 	_getSearch: (search) => {
-		return actionQuery('SELECT * FROM menu WHERE name LIKE', [`%${search}%`])
+		return actionQuery('SELECT * FROM menu WHERE name LIKE ?', `%${search}%`)
 	},
 	_getTotal: () => {
 		return actionQuery('SELECT COUNT(*) AS total FROM menu')
 	},
-	_updateMenu: ({ name, price, description, image, updated_at }, id) => {
-		const queryData = {
-			text: 'UPDATE menu SET name = $1, price = $2, description = $3, image = $4, updated_at = $5 WHERE menu_id = $6',
-			values: [name, price, description, image, updated_at, id]
-		}
-		return actionQuery(queryData)
+	_updateMenu: (data, id) => {
+		return actionQuery('UPDATE menu SET ? WHERE menu_id = ?', [data, id])
 	},
 	_deleteMenu: (id) => {
-		return actionQuery('DELETE FROM menu WHERE menu_id = $1', [id])
+		return actionQuery('DELETE FROM menu WHERE menu_id = ?', id)
 	}
 }
