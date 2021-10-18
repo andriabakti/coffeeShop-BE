@@ -38,6 +38,7 @@ module.exports = {
 	},
 	errors: {
 		notFound: {
+			code: 'ERR_NOT_FOUND',
 			status_code: 404,
 			message: 'Data Not Found'
 		},
