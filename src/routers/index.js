@@ -1,5 +1,7 @@
 const { Router } = require('express')
-const menuRoutes = require('./menu_routes')
+const menuRoutes = require('./product_routes')
 const route = Router()
 
-module.exports = route.use('/menu', menuRoutes)
+route.use('/menu', menuRoutes)
+
+module.exports = route
