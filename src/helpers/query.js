@@ -1,10 +1,10 @@
-const pool = require('../configs/connection')
-const { errors } = require('./helpers')
+const conn = require('../configs/connection')
+const { errors } = require('./response')
 
 module.exports = {
-	actionQuery: (...arg) => {
+	queryHelper: (...arg) => {
 		return new Promise((resolve, reject) => {
-			pool.query(...arg, (err, res) => {
+			conn.query(...arg, (err, res) => {
 				if (!err) {
 					if (res.length <= 0 || res.affectedRows === 0) {
 						const objError = errors.notFound

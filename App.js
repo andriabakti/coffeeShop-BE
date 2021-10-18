@@ -4,7 +4,7 @@ const { urlencoded, json } = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-const routes = require('./src/routers/')
+const routesNav = require('./src/routers/')
 
 const app = express()
 const port = process.env.PORT || 3939
@@ -19,7 +19,7 @@ app.use(helmet())
 app.use(cors())
 app.options('*', cors())
 app.use(logger('dev'))
-app.use('/api/v1', routes)
+app.use('/api/v1', routesNav)
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`)
