@@ -10,7 +10,7 @@ const {
 const { response, status, pageInfo } = require('../helpers/helpers')
 
 module.exports = {
-	insertMenu: (req, res) => {
+	insertMenu(req, res) {
 		const { name, price, description, category_id, image } = req.body
 		const data = {
 			name,
@@ -25,12 +25,12 @@ module.exports = {
 				response(res, {}, res.statusCode, status.insert, null, null)
 			})
 			.catch((error) => {
-				response(res, [], error.status_code, null, null, error)
+				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getAllMenu: (req, res) => {
+	getAllMenu(req, res) {
 		const search = req.query.search || null
-		const sort = req.query.sort || 'menu_id'
+		const sort = req.query.sort || 'id'
 		const order = req.query.order || 'ASC'
 		const limit = Number(req.query.limit) || 3
 		const page = Number(req.query.page) || 1
@@ -61,20 +61,20 @@ module.exports = {
 				response(res, result, res.statusCode, status.found, links, null)
 			})
 			.catch((error) => {
-				response(res, [], error.status_code, null, null, error)
+				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getMenuById: (req, res) => {
+	getMenuById(req, res) {
 		const { id } = req.params
 		_getMenuById(id)
 			.then((result) => {
 				response(res, result, res.statusCode, status.found, null, null)
 			})
 			.catch((error) => {
-				response(res, {}, error.status_code, null, null, error)
+				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	updateMenu: (req, res) => {
+	updateMenu(req, res) {
 		const { id } = req.params
 		const { name, price, description, category_id, image } = req.body
 		const data = {
@@ -90,17 +90,17 @@ module.exports = {
 				response(res, {}, res.statusCode, status.update, null, null)
 			})
 			.catch((error) => {
-				response(res, {}, error.status_code, null, null, error)
+				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	deleteMenu: (req, res) => {
+	deleteMenu(req, res) {
 		const { id } = req.params
 		_deleteMenu(id)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.delete, null, null)
 			})
 			.catch((error) => {
-				response(res, {}, error.status_code, null, null, error)
+				response(res, {}, error.statusCode, null, null, error)
 			})
 	}
 }
