@@ -1,16 +1,16 @@
 const {
-	_insertMenu,
-	_getAllMenu,
-	_getMenuById,
-	_updateMenu,
-	_deleteMenu,
+	_insertProduct,
+	_getAllProduct,
+	_getProductById,
+	_updateProduct,
+	_deleteProduct,
 	_getSearch,
 	_getTotal
-} = require('../models/menu_model')
-const { response, status, pageInfo } = require('../helpers/helpers')
+} = require('../models/product_model')
+const { response, status, pageInfo } = require('../helpers/response')
 
 module.exports = {
-	insertMenu(req, res) {
+	insertProduct: (req, res) => {
 		const { name, price, description, category_id, image } = req.body
 		const data = {
 			name,
@@ -20,7 +20,7 @@ module.exports = {
 			image,
 			created_at: new Date()
 		}
-		_insertMenu(data)
+		_insertProduct(data)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.insert, null, null)
 			})
@@ -28,7 +28,7 @@ module.exports = {
 				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getAllMenu(req, res) {
+	getAllProducts: (req, res) => {
 		const search = req.query.search || null
 		const sort = req.query.sort || 'id'
 		const order = req.query.order || 'ASC'
@@ -53,7 +53,7 @@ module.exports = {
 					console.log(error)
 				})
 		}
-		_getAllMenu(search, sort, order, limit, offset)
+		_getAllProducts(search, sort, order, limit, offset)
 			.then((result) => {
 				const count = result.length
 				const total = parseInt(totalData)
@@ -64,9 +64,9 @@ module.exports = {
 				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getMenuById(req, res) {
+	getProductById: (req, res) => {
 		const { id } = req.params
-		_getMenuById(id)
+		_getProductById(id)
 			.then((result) => {
 				response(res, result, res.statusCode, status.found, null, null)
 			})
@@ -74,7 +74,7 @@ module.exports = {
 				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	updateMenu(req, res) {
+	updateProduct: (req, res) => {
 		const { id } = req.params
 		const { name, price, description, category_id, image } = req.body
 		const data = {
@@ -85,7 +85,7 @@ module.exports = {
 			image,
 			updated_at: new Date()
 		}
-		_updateMenu(data, id)
+		_updateProduct(data, id)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.update, null, null)
 			})
@@ -93,9 +93,9 @@ module.exports = {
 				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	deleteMenu(req, res) {
+	deleteProduct: (req, res) => {
 		const { id } = req.params
-		_deleteMenu(id)
+		_deleteProduct(id)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.delete, null, null)
 			})
