@@ -1,9 +1,11 @@
 const { Router } = require('express')
-const menuRoutes = require('./product_routes')
-const categoryRoutes = require('./category_routes')
-const routes = Router()
+const productRoutes = require('./router_product')
+const categoryRoutes = require('./router_category')
+const router = Router()
 
-routes
-  .use('/menu', menuRoutes)
-  .use('/categories', categoryRoutes)
-module.exports = routes
+module.exports = router
+	.use('/products', productRoutes)
+	.use('/categories', categoryRoutes)
+	.use('/users', (_req, res) => {
+		res.send('Users route')
+	})
