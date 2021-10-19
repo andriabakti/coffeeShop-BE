@@ -1,20 +1,20 @@
 const { response, status } = require('../helpers/helper_resp')
 const {
-	newCategory,
-	fetchCategories,
-	fetchCategoryById,
+	insertCategory,
+	getAllCategory,
+	getCategoryById,
 	editCategory,
 	removeCategory
 } = require('../models/model_category')
 
 module.exports = {
-	insertCategory: (req, res) => {
+	createCategory: (req, res) => {
 		const { name } = req.body
 		const data = {
 			name,
 			created_at: new Date()
 		}
-		newCategory(data)
+		insertCategory(data)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.insert, null, null)
 			})
@@ -22,8 +22,8 @@ module.exports = {
 				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getAllCategories: (_req, res) => {
-		fetchCategories()
+	readAllCategory: (_req, res) => {
+		getAllCategory()
 			.then((result) => {
 				response(res, result, res.statusCode, status.found, null, null)
 			})
@@ -31,9 +31,9 @@ module.exports = {
 				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getCategoryById: (req, res) => {
+	readCategoryById: (req, res) => {
 		const { id } = req.params
-		fetchCategoryById(id)
+		getCategoryById(id)
 			.then((result) => {
 				response(res, result, res.statusCode, status.found, null, null)
 			})
