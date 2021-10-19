@@ -5,7 +5,7 @@ const {
 	getCategoryById,
 	updateCategory,
 	deleteCategory
-} = require('../controllers/category_controllers')
+} = require('../controllers/controller_category')
 const routes = Router()
 
 routes

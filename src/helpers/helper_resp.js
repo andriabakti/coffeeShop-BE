@@ -1,18 +1,18 @@
 module.exports = {
-	response: (res, result, status, message, links, error) => {
-		const resultPrint = {}
-		resultPrint.success = !error
+	response: (res, result, status, message, link, error) => {
+		const resp = {}
+		resp.success = !error
 		if (!error) {
-			resultPrint.status_code = status || null
-			resultPrint.message = message || null
+			resp.status_code = status || null
+			resp.message = message || null
 		} else {
-			resultPrint.error = error
+			resp.error = error
 		}
-		resultPrint.data = result
-		if (links) {
-			resultPrint.page_info = links
+		resp.data = result
+		if (link) {
+			resp.page_info = link
 		}
-		return res.status(status).json(resultPrint)
+		return res.status(status).json(resp)
 	},
 	status: {
 		found: 'Data found',
@@ -42,15 +42,11 @@ module.exports = {
 			status_code: 404,
 			message: 'Data Not Found'
 		},
-		checkStatusCode: (errorCode) => {
-			const errorCodes = Number(errorCode)
-			if (errorCodes === 1048 || errorCodes === 1366) {
+		checkStatusCode: (error) => {
+			const code = Number(error)
+			if (code === 1048 || code === 1366) {
 				return 400
-			} else if (
-				errorCodes === 1146 ||
-				errorCodes === 1054 ||
-				errorCodes === 1051
-			) {
+			} else if (code === 1146 || code === 1054 || code === 1051) {
 				return 500
 			} else {
 				return 400

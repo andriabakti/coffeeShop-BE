@@ -1,16 +1,16 @@
 const {
-	_insertProduct,
-	_getAllProduct,
-	_getProductById,
-	_updateProduct,
-	_deleteProduct,
-	_getSearch,
-	_getTotal
-} = require('../models/product_model')
-const { response, status, pageInfo } = require('../helpers/response')
+	insertProduct,
+	getAllProduct,
+	getProductById,
+	editProduct,
+	removeProduct,
+	getSearch,
+	getTotal
+} = require('../models/model_product')
+const { response, status, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {
-	insertProduct: (req, res) => {
+	createProduct: (req, res) => {
 		const { name, price, description, category_id, image } = req.body
 		const data = {
 			name,
@@ -20,7 +20,7 @@ module.exports = {
 			image,
 			created_at: new Date()
 		}
-		_insertProduct(data)
+		insertProduct(data)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.insert, null, null)
 			})
@@ -28,7 +28,7 @@ module.exports = {
 				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getAllProducts: (req, res) => {
+	readAllProduct: (req, res) => {
 		const search = req.query.search || null
 		const sort = req.query.sort || 'id'
 		const order = req.query.order || 'ASC'
@@ -37,7 +37,7 @@ module.exports = {
 		const offset = (page === 0 ? 1 : page - 1) * limit
 
 		if (search) {
-			_getSearch(search)
+			getSearch(search)
 				.then((result) => {
 					totalData = result.length
 				})
@@ -45,7 +45,7 @@ module.exports = {
 					console.log(error)
 				})
 		} else {
-			_getTotal()
+			getTotal()
 				.then((result) => {
 					totalData = result[0].total
 				})
@@ -53,7 +53,7 @@ module.exports = {
 					console.log(error)
 				})
 		}
-		_getAllProducts(search, sort, order, limit, offset)
+		getAllProduct(search, sort, order, limit, offset)
 			.then((result) => {
 				const count = result.length
 				const total = parseInt(totalData)
@@ -64,9 +64,9 @@ module.exports = {
 				response(res, [], error.statusCode, null, null, error)
 			})
 	},
-	getProductById: (req, res) => {
+	readProductById: (req, res) => {
 		const { id } = req.params
-		_getProductById(id)
+		getProductById(id)
 			.then((result) => {
 				response(res, result, res.statusCode, status.found, null, null)
 			})
@@ -85,7 +85,7 @@ module.exports = {
 			image,
 			updated_at: new Date()
 		}
-		_updateProduct(data, id)
+		editProduct(data, id)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.update, null, null)
 			})
@@ -95,7 +95,7 @@ module.exports = {
 	},
 	deleteProduct: (req, res) => {
 		const { id } = req.params
-		_deleteProduct(id)
+		removeProduct(id)
 			.then((_result) => {
 				response(res, {}, res.statusCode, status.delete, null, null)
 			})

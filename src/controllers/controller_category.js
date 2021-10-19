@@ -1,11 +1,11 @@
-const { response, status } = require('../helpers/response')
+const { response, status } = require('../helpers/helper_resp')
 const {
 	newCategory,
 	fetchCategories,
 	fetchCategoryById,
 	editCategory,
 	removeCategory
-} = require('../models/category_models')
+} = require('../models/model_category')
 
 module.exports = {
 	insertCategory: (req, res) => {
