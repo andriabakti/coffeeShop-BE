@@ -1,13 +1,13 @@
 const { queryHelper } = require('../helpers/helper_query')
 
 module.exports = {
-	newCategory: (data) => {
+	insertCategory: (data) => {
 		return queryHelper('INSERT INTO categories SET ?', data)
 	},
-	fetchCategories: () => {
+	getAllCategory: () => {
 		return queryHelper('SELECT * FROM categories')
 	},
-	fetchCategoryById: (id) => {
+	getCategoryById: (id) => {
 		return queryHelper('SELECT categories.* FROM categories WHERE id = ?', id)
 	},
 	editCategory: (data, id) => {
