@@ -3,9 +3,6 @@ module.exports = {
   register: (data) => {
     return queryHelper('INSERT INTO users SET ?', data)
   },
-  login: (data) => {
-    return queryHelper('INSERT INTO users SET ?', data)
-  },
   getUserByEmail: (email) => {
     return queryHelper('SELECT * FROM users WHERE email = ?', email)
   }

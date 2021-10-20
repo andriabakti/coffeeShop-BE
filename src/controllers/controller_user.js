@@ -1,6 +1,6 @@
 const { genSalt, hash, compare } = require('bcryptjs')
-const { register, login, getUserByEmail } = require('../models/model_user')
-const { response, status } = require('../helpers/helper_resp')
+const { register, getUserByEmail } = require('../models/model_user')
+const { response } = require('../helpers/helper_resp')
 
 module.exports = {
   // async
@@ -49,6 +49,5 @@ module.exports = {
       .catch((error) => {
         response(res, [], error.status_code, 'Login failed', null, error)
       })
-    // login()
   }
 }
