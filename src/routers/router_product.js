@@ -6,11 +6,12 @@ const {
 	updateProduct,
 	deleteProduct
 } = require('../controllers/controller_product')
+const { verifyAccess } = require('../middlewares/midware_auth')
 const router = Router()
 
 module.exports = router
-	.post('/', createProduct)
-	.get('/', readAllProduct)
-	.get('/:id', readProductById)
-	.patch('/:id', updateProduct)
-	.delete('/:id', deleteProduct)
+	.post('/', verifyAccess, createProduct)
+	.get('/', verifyAccess, readAllProduct)
+	.get('/:id', verifyAccess, readProductById)
+	.patch('/:id', verifyAccess, updateProduct)
+	.delete('/:id', verifyAccess, deleteProduct)
