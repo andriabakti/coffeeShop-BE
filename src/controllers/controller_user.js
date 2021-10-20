@@ -1,4 +1,5 @@
 const { genSalt, hash, compare } = require('bcryptjs')
+const { sign } = require('jsonwebtoken')
 const { register, getUserByEmail } = require('../models/model_user')
 const { response } = require('../helpers/helper_resp')
 
@@ -34,17 +35,34 @@ module.exports = {
     const { email, password } = req.body
     getUserByEmail(email)
       .then((result) => {
-        console.log(result[0]);
         // response
         // if (!result) return response(res, [], res.status_code, 'Email not found!', null, error)
         const user = result[0]
-        compare(password, user.password).then((resCompare) => {
-          !resCompare && response(res, {}, res.status_code, 'Password is wrong!', null, error)
-          delete user.password
-          delete user.created_at
-          delete user.updated_at
-          response(res, result[0], res.statusCode, 'Login success', null, null)
-        })
+        compare(password, user.password)
+          .then((resCompare) => {
+            !resCompare &&
+              response(res, {}, res.status_code, 'Password is wrong!', null, error
+              )
+            const payload = {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.role
+            }
+            sign(
+              payload,
+              process.env.JWT_KEY,
+              { expiresIn: '12h' },
+              (err, token) => {
+                user.token = token
+                delete user.password
+                delete user.created_at
+                delete user.updated_at
+                response(res, result[0], res.statusCode, 'Login success', null, null)
+              }
+            )
+          })
+        // catch
       })
       .catch((error) => {
         response(res, [], error.status_code, 'Login failed', null, error)
