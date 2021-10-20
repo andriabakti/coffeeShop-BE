@@ -7,11 +7,12 @@ const {
 	deleteProduct
 } = require('../controllers/controller_product')
 const { verifyAccess } = require('../middlewares/midware_auth')
+const { upload } = require('../middlewares/midware_multer')
 const router = Router()
 
 module.exports = router
-	.post('/', verifyAccess, createProduct)
+	.post('/', verifyAccess, upload.single('image'), createProduct)
 	.get('/', verifyAccess, readAllProduct)
 	.get('/:id', verifyAccess, readProductById)
-	.patch('/:id', verifyAccess, updateProduct)
+	.patch('/:id', verifyAccess, upload.single('image'), updateProduct)
 	.delete('/:id', verifyAccess, deleteProduct)

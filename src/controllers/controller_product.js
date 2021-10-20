@@ -11,17 +11,19 @@ const { response, status, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {
 	createProduct: (req, res) => {
-		const { name, price, description, category_id, image } = req.body
+		console.log(req.file)
+		const { name, price, description, category_id } = req.body
+		const { URL } = process.env
 		const data = {
 			name,
 			price,
 			description,
 			category_id,
-			image,
+			image: `${URL}uploads/${req.file.filename}`,
 			created_at: new Date()
 		}
 		insertProduct(data)
-			.then((_result) => {
+			.then((result) => {
 				response(res, {}, res.statusCode, status.insert, null, null)
 			})
 			.catch((error) => {
@@ -86,7 +88,7 @@ module.exports = {
 			updated_at: new Date()
 		}
 		editProduct(data, id)
-			.then((_result) => {
+			.then((result) => {
 				response(res, {}, res.statusCode, status.update, null, null)
 			})
 			.catch((error) => {
@@ -96,7 +98,7 @@ module.exports = {
 	deleteProduct: (req, res) => {
 		const { id } = req.params
 		removeProduct(id)
-			.then((_result) => {
+			.then((result) => {
 				response(res, {}, res.statusCode, status.delete, null, null)
 			})
 			.catch((error) => {

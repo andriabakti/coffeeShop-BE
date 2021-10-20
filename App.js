@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const { urlencoded, json } = require('express')
+const { urlencoded, json, static } = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 const logger = require('morgan')
@@ -20,6 +20,7 @@ app.options('*', cors())
 app.use(helmet())
 app.use(logger('dev'))
 app.use('/api/v1', routes)
+app.use('/uploads', static('./uploads'))
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`)
