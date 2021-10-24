@@ -6,5 +6,5 @@ const router = Router()
 
 module.exports = router
 	.use('/products', productRoutes)
-	.use('/categories', categoryRoutes)
-	.use('/users', userRouter)
+	.use('/category', categoryRoutes)
+	.use('/user', userRouter)

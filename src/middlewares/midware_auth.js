@@ -3,9 +3,8 @@ const { response } = require('../helpers/helper_resp')
 
 module.exports = {
   verifyAccess: (req, res, next) => {
-    const bearerToken = req.headers.authorization
+    const token = req.headers.authorization.split(' ')[1]
     // TODO: verifikasi bearer token
-    const token = bearerToken.split(' ')[1]
     verify(token, process.env.JWT_KEY, (err, decoded) => {
 
       // TODO: error handling
