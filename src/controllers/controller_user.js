@@ -6,16 +6,16 @@ const { response } = require('../helpers/helper_resp')
 module.exports = {
   // async
   signUp: (req, res) => {
-    const { name, email, password, phone } = req.body
+    const { username, email, password, phone, role } = req.body
     // check email from db with model
     // isUser = await checkEmail(email)
     // if result >= 0 ? response
     const data = {
-      name,
+      username,
       email,
       password,
       phone,
-      role: 2,
+      role,
       created_at: new Date()
     }
     genSalt(10, (_err, salt) => {
@@ -45,7 +45,7 @@ module.exports = {
               )
             const payload = {
               id: user.id,
-              name: user.name,
+              username: user.username,
               email: user.email,
               role: user.role
             }
@@ -67,5 +67,8 @@ module.exports = {
       .catch((error) => {
         response(res, [], error.status_code, 'Login failed', null, error)
       })
+  },
+  getAllUser: (req, res) => {
+    res.send('GET All User')
   }
 }
