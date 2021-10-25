@@ -1,7 +1,5 @@
 const { Router } = require('express')
 const {
-  signUp,
-  signIn,
   readAllAdmin,
   readAllCustomer,
   updateUser,
@@ -10,8 +8,6 @@ const {
 const router = Router()
 
 module.exports = router
-  .post('/sign-up', signUp)
-  .post('/sign-in', signIn)
   .get('/admin', readAllAdmin)
   .get('/', readAllCustomer)
   .patch('/:id', updateUser)
