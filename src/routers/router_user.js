@@ -1,14 +1,16 @@
-const { Router } = require('express')
 const {
   readAllAdmin,
   readAllCustomer,
   updateUser,
   deleteUser
 } = require('../controllers/controller_user')
-const router = Router()
 
-module.exports = router
+const express = require('express')
+const router = express.Router()
+
+router
   .get('/admin', readAllAdmin)
-  .get('/', readAllCustomer)
+  .get('/customer', readAllCustomer)
   .patch('/:id', updateUser)
   .delete('/:id', deleteUser)
+module.exports = router
