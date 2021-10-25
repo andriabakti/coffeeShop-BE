@@ -1,4 +1,3 @@
-const { Router } = require('express')
 const {
 	createProduct,
 	readAllProduct,
@@ -6,13 +5,20 @@ const {
 	updateProduct,
 	deleteProduct
 } = require('../controllers/controller_product')
-const { verifyAccess } = require('../middlewares/midware_auth')
-const { upload } = require('../middlewares/midware_multer')
-const router = Router()
+const {
+	verifyAccess
+} = require('../middlewares/midware_auth')
+const {
+	upload
+} = require('../middlewares/midware_multer')
 
-module.exports = router
+const express = require('express')
+const router = express.Router()
+
+router
 	.post('/', verifyAccess, upload.single('image'), createProduct)
 	.get('/', verifyAccess, readAllProduct)
 	.get('/:id', verifyAccess, readProductById)
 	.patch('/:id', verifyAccess, upload.single('image'), updateProduct)
 	.delete('/:id', verifyAccess, deleteProduct)
+module.exports = router
