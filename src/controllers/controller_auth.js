@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+
 const {
   registerUser,
   getUserByEmail
@@ -15,23 +16,23 @@ module.exports = {
     // check email from db with model
     // isUser = await checkEmail(email)
     // if result >= 0 ? response
-    const data = {
-      username,
-      email,
-      password,
-      phone,
-      role,
-      created_at: new Date()
-    }
-    bcrypt.genSalt(10, (_err, salt) => {
-      bcrypt.hash(data.password, salt, (_err, hash) => {
-        data.password = hash
-        registerUser(data)
-          .then((_result) => {
-            response(res, {}, res.statusCode, 'Register success', null, null)
+    const rounds = 10
+    bcrypt.genSalt(rounds, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        const newUser = {
+          username,
+          email,
+          password: hash,
+          phone,
+          role,
+          status: 2
+        }
+        registerUser(newUser)
+          .then((result) => {
+            response(res, result, res.statusCode, 'Register success', null, null)
           })
           .catch((error) => {
-            response(res, [], error.statusCode, 'Register failed', null, error)
+            response(res, [], 400, 'Register failed', null, error)
           })
       })
     })
@@ -44,15 +45,7 @@ module.exports = {
         // if (!result) return response(res, [], res.status_code, 'Email not found!', null, error)
         const user = result[0]
         bcrypt.compare(password, user.password).then((resCompare) => {
-          !resCompare &&
-            response(
-              res,
-              {},
-              res.status_code,
-              'Password is wrong!',
-              null,
-              error
-            )
+          !resCompare && response(res, {}, res.status_code, 'Password is wrong!', null, error)
           const payload = {
             id: user.id,
             username: user.username,
@@ -60,24 +53,12 @@ module.exports = {
             role: user.role
           }
           jwt.sign(
-            payload,
-            process.env.JWT_KEY,
-            {
-              expiresIn: '12h'
-            },
-            (err, token) => {
+            payload, process.env.JWT_KEY, { expiresIn: '12h' }, (err, token) => {
               user.token = token
               delete user.password
               delete user.created_at
               delete user.updated_at
-              response(
-                res,
-                result[0],
-                res.statusCode,
-                'Login success',
-                null,
-                null
-              )
+              response(res, result[0], res.statusCode, 'Login success', null, null)
             }
           )
         })

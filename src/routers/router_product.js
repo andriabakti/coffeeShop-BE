@@ -1,3 +1,6 @@
+const express = require('express')
+const router = express.Router()
+
 const {
 	createProduct,
 	readAllProduct,
@@ -11,9 +14,6 @@ const {
 const {
 	upload
 } = require('../middlewares/midware_multer')
-
-const express = require('express')
-const router = express.Router()
 
 router
 	.post('/', verifyAccess, upload.single('image'), createProduct)
