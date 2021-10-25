@@ -1,4 +1,7 @@
-const { queryHelper } = require('../helpers/helper_query')
+const {
+  queryHelper
+} = require('../helpers/helper_query')
+
 module.exports = {
   registerUser: (data) => {
     return queryHelper('INSERT INTO users SET ?', data)

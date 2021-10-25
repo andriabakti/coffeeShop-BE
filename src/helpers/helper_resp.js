@@ -14,7 +14,7 @@ module.exports = {
 		}
 		return res.status(status).json(resp)
 	},
-	status: {
+	message: {
 		found: 'Data found',
 		insert: 'Data successfully added',
 		update: 'Data successfully updated',

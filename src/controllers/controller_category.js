@@ -1,4 +1,4 @@
-const { response, status } = require('../helpers/helper_resp')
+const { response, message } = require('../helpers/helper_resp')
 const {
 	insertCategory,
 	getAllCategory,
@@ -16,7 +16,7 @@ module.exports = {
 		}
 		insertCategory(data)
 			.then((_result) => {
-				response(res, {}, res.statusCode, status.insert, null, null)
+				response(res, {}, res.statusCode, message.insert, null, null)
 			})
 			.catch((error) => {
 				response(res, [], error.statusCode, null, null, error)
@@ -25,7 +25,7 @@ module.exports = {
 	readAllCategory: (_req, res) => {
 		getAllCategory()
 			.then((result) => {
-				response(res, result, res.statusCode, status.found, null, null)
+				response(res, result, res.statusCode, message.found, null, null)
 			})
 			.catch((error) => {
 				response(res, [], error.statusCode, null, null, error)
@@ -35,7 +35,7 @@ module.exports = {
 		const { id } = req.params
 		getCategoryById(id)
 			.then((result) => {
-				response(res, result, res.statusCode, status.found, null, null)
+				response(res, result, res.statusCode, message.found, null, null)
 			})
 			.catch((error) => {
 				response(res, [], error.statusCode, null, null, error)
@@ -50,7 +50,7 @@ module.exports = {
 		}
 		editCategory(data, id)
 			.then((_result) => {
-				response(res, {}, res.statusCode, status.update, null, null)
+				response(res, {}, res.statusCode, message.update, null, null)
 			})
 			.catch((error) => {
 				response(res, {}, error.statusCode, null, null, error)
@@ -60,7 +60,7 @@ module.exports = {
 		const { id } = req.params
 		removeCategory(id)
 			.then((_result) => {
-				response(res, {}, res.statusCode, status.delete, null, null)
+				response(res, {}, res.statusCode, message.delete, null, null)
 			})
 			.catch((error) => {
 				response(res, {}, error.statusCode, null, null, error)

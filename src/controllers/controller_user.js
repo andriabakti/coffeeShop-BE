@@ -6,14 +6,18 @@ const {
 } = require('../models/model_user')
 const {
   response,
-  status
+  message
 } = require('../helpers/helper_resp')
 
 module.exports = {
   readAllAdmin: (req, res) => {
     getAllAdmin()
       .then((result) => {
-        response(res, result, res.statusCode, status.found, null, null)
+        result.map(item => {
+          delete item.password
+          delete item.updated_at
+        })
+        response(res, result, res.statusCode, message.found, null, null)
       })
       .catch((error) => {
         response(res, [], error.statusCode, null, null, error)
@@ -22,7 +26,11 @@ module.exports = {
   readAllCustomer: (req, res) => {
     getAllCustomer()
       .then((result) => {
-        response(res, result, res.statusCode, status.found, null, null)
+        result.map(item => {
+          delete item.password
+          delete item.updated_at
+        })
+        response(res, result, res.statusCode, message.found, null, null)
       })
       .catch((error) => {
         response(res, [], error.statusCode, null, null, error)
@@ -39,7 +47,7 @@ module.exports = {
     }
     modifyUser(data, id)
       .then((result) => {
-        response(res, {}, res.statusCode, status.update, null, null)
+        response(res, {}, res.statusCode, message.update, null, null)
       })
       .catch((error) => {
         response(res, [], error.statusCode, null, null, error)
@@ -49,7 +57,7 @@ module.exports = {
     const { id } = req.params
     removeUser(id)
       .then((result) => {
-        response(res, {}, res.statusCode, status.delete, null, null)
+        response(res, {}, res.statusCode, message.delete, null, null)
       })
       .catch((error) => {
         response(res, {}, error.statusCode, null, null, error)

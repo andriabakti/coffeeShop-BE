@@ -7,7 +7,7 @@ const {
 	getSearch,
 	getTotal
 } = require('../models/model_product')
-const { response, status, pageInfo } = require('../helpers/helper_resp')
+const { response, message, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {
 	createProduct: (req, res) => {
@@ -24,7 +24,7 @@ module.exports = {
 		}
 		insertProduct(data)
 			.then((result) => {
-				response(res, {}, res.statusCode, status.insert, null, null)
+				response(res, {}, res.statusCode, message.insert, null, null)
 			})
 			.catch((error) => {
 				response(res, [], error.statusCode, null, null, error)
@@ -60,7 +60,7 @@ module.exports = {
 				const count = result.length
 				const total = parseInt(totalData)
 				const links = pageInfo(limit, page, total, count)
-				response(res, result, res.statusCode, status.found, links, null)
+				response(res, result, res.statusCode, message.found, links, null)
 			})
 			.catch((error) => {
 				response(res, [], error.statusCode, null, null, error)
@@ -70,7 +70,7 @@ module.exports = {
 		const { id } = req.params
 		getProductById(id)
 			.then((result) => {
-				response(res, result, res.statusCode, status.found, null, null)
+				response(res, result, res.statusCode, message.found, null, null)
 			})
 			.catch((error) => {
 				response(res, {}, error.statusCode, null, null, error)
@@ -89,7 +89,7 @@ module.exports = {
 		}
 		editProduct(data, id)
 			.then((result) => {
-				response(res, {}, res.statusCode, status.update, null, null)
+				response(res, {}, res.statusCode, message.update, null, null)
 			})
 			.catch((error) => {
 				response(res, {}, error.statusCode, null, null, error)
@@ -99,7 +99,7 @@ module.exports = {
 		const { id } = req.params
 		removeProduct(id)
 			.then((result) => {
-				response(res, {}, res.statusCode, status.delete, null, null)
+				response(res, {}, res.statusCode, message.delete, null, null)
 			})
 			.catch((error) => {
 				response(res, {}, error.statusCode, null, null, error)

@@ -1,3 +1,6 @@
+const express = require('express')
+const router = express.Router()
+
 const {
 	createCategory,
 	readAllCategory,
@@ -5,9 +8,6 @@ const {
 	updateCategory,
 	deleteCategory
 } = require('../controllers/controller_category')
-
-const express = require('express')
-const router = express.Router()
 
 router
 	.post('/', createCategory)
