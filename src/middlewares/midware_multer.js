@@ -6,7 +6,11 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // TODO: random name
-    cb(null, new Date().toISOString() + file.originalname)
+    const date = new Date().toDateString().split(' ').join('_')
+    const time = new Date().toLocaleTimeString().split(':').join('')
+    const unique = Date.now()
+    const name = file.originalname.split(' ').join('_')
+    cb(null, `${date}-${time}-${unique}-${name}`)
   }
 })
 
@@ -16,5 +20,5 @@ const upload = multer({
 })
 
 module.exports = {
-  upload: upload
+  upload
 }
