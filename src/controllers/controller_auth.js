@@ -44,25 +44,28 @@ module.exports = {
         // response
         // if (!result) return response(res, [], res.status_code, 'Email not found!', null, error)
         const user = result[0]
-        bcrypt.compare(password, user.password).then((resCompare) => {
-          !resCompare && response(res, {}, res.status_code, 'Password is wrong!', null, error)
-          const payload = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role
-          }
-          jwt.sign(
-            payload, process.env.JWT_KEY, { expiresIn: '12h' }, (err, token) => {
-              user.token = token
-              delete user.password
-              delete user.created_at
-              delete user.updated_at
-              response(res, result[0], res.statusCode, 'Login success', null, null)
+        bcrypt.compare(password, user.password)
+          .then((resCompare) => {
+            !resCompare && response(res, {}, res.status_code, 'Password is wrong!', null, null)
+            const payload = {
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              role: user.role
             }
-          )
-        })
-        // catch
+            jwt.sign(
+              payload, process.env.JWT_KEY, { expiresIn: '12h' }, (err, token) => {
+                user.token = token
+                delete user.password
+                delete user.created_at
+                delete user.updated_at
+                response(res, result[0], res.statusCode, 'Login success', null, null)
+              }
+            )
+          })
+        // .catch((error) => {
+        //   response(res, {}, res.statusCode, 'Password is wrong!', null, null)
+        // })
       })
       .catch((error) => {
         response(res, [], error.status_code, 'Login failed', null, error)
