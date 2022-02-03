@@ -19,7 +19,7 @@ module.exports = {
 			price,
 			description,
 			category_id,
-			image: `${URL}uploads/${req.file.filename}`,
+			image: `${URL}/uploads/${req.file.filename}`,
 			created_at: new Date()
 		}
 		insertProduct(data)
@@ -79,12 +79,13 @@ module.exports = {
 	updateProduct: (req, res) => {
 		const { id } = req.params
 		const { name, price, description, category_id, image } = req.body
+		const { URL } = process.env
 		const data = {
 			name,
 			price,
 			description,
 			category_id,
-			image,
+			image: `${URL}/uploads/${req.file.filename}`,
 			updated_at: new Date()
 		}
 		editProduct(data, id)

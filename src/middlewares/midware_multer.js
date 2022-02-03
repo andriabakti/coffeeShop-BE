@@ -6,11 +6,11 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // TODO: random name
+    const unique = Date.now()
     const date = new Date().toDateString().split(' ').join('_')
     const time = new Date().toLocaleTimeString().split(':').join('')
-    const unique = Date.now()
     const name = file.originalname.split(' ').join('_')
-    cb(null, `${date}-${time}-${unique}-${name}`)
+    cb(null, `${unique}-${date}-${time}-${name}`)
   }
 })
 
