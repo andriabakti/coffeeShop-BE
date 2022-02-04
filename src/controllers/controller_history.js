@@ -1,37 +1,55 @@
 const { response, message } = require('../helpers/helper_resp')
-const { insertHistory, getAllHistory, removeHistory } = require('../models/model_history')
+const { insertOrderDetail, insertOrderItem, getAllOrder, removeOrder } = require('../models/model_history')
 
 module.exports = {
-  createHistory: (req, res) => {
-    const { user_id, name, price, status, image } = req.body
-    const data = {
-      user_id,
-      name,
-      price,
-      status,
-      image,
+  createOrder: (req, res) => {
+    const { id, total, payment } = req.body
+    const details = {
+      user_id: id,
+      total,
+      payment,
       created_at: new Date()
     }
-    insertHistory(data)
-      .then((_result) => {
-        response(res, {}, res.statusCode, message.insert, null, null)
+
+    insertOrderDetail(details)
+      .then((result) => {
+        let order_id = result.insertId
+        req.body.items.map(item => {
+          const data = {
+            order_id: order_id,
+            product_id: item.id,
+            quantity: item.quantity,
+            size: item.size,
+            delivery: item.delivery,
+            created_at: new Date()
+          }
+          insertOrderItem(data)
+            .then((_result) => {
+              response(res, {}, res.statusCode, message.insert, null, null)
+            })
+            .catch((error) => {
+              response(res, [], error.statusCode, null, null, error)
+            })
+          // response(res, {}, res.statusCode, message.insert, null, null)
+        })
       })
       .catch((error) => {
         response(res, [], error.statusCode, null, null, error)
       })
   },
-  readAllHistory: (_req, res) => {
-    getAllHistory()
+  readAllOrder: (_req, res) => {
+    getAllOrder()
       .then((result) => {
+        console.log(result);
         response(res, result, res.statusCode, message.found, null, null)
       })
       .catch((error) => {
         response(res, [], error.statusCode, null, null, error)
       })
   },
-  deleteHistory: (req, res) => {
+  deleteOrder: (req, res) => {
     const { id } = req.params
-    removeHistory(id)
+    removeOrder(id)
       .then((_result) => {
         response(res, {}, res.statusCode, message.delete, null, null)
       })
