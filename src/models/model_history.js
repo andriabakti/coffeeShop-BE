@@ -1,13 +1,16 @@
 const { queryHelper } = require('../helpers/helper_query')
 
 module.exports = {
-  insertHistory: (data) => {
-    return queryHelper('INSERT INTO histories SET ?', data)
+  insertOrderDetail: (details) => {
+    return queryHelper('INSERT INTO order_details SET ?', details)
   },
-  getAllHistory: () => {
-    return queryHelper('SELECT * FROM histories')
+  insertOrderItem: (items) => {
+    return queryHelper('INSERT INTO order_items SET ?', items)
   },
-  removeHistory: (id) => {
+  getAllOrder: () => {
+    return queryHelper('SELECT order_items.*, products.* FROM order_items INNER JOIN products ON order_items.product_id = products.id')
+  },
+  removeOrder: (id) => {
     return queryHelper('DELETE FROM histories WHERE id =?', id)
   }
 }

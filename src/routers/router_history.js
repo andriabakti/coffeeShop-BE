@@ -2,13 +2,13 @@ const express = require('express')
 const router = express.Router()
 
 const {
-  createHistory,
-  readAllHistory,
-  deleteHistory
+  createOrder,
+  readAllOrder,
+  deleteOrder
 } = require('../controllers/controller_history')
 
 router
-  .post('/', createHistory)
-  .get('/', readAllHistory)
-  .delete('/:id', deleteHistory)
+  .post('/', createOrder)
+  .get('/', readAllOrder)
+  .delete('/:id', deleteOrder)
 module.exports = router
