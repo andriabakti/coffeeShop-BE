@@ -41,6 +41,7 @@ module.exports = {
     const { email, password } = req.body
     getUserByEmail(email)
       .then((result) => {
+        console.log(result)
         // response
         // if (!result) return response(res, [], res.status_code, 'Email not found!', null, error)
         const user = result[0]
@@ -68,7 +69,8 @@ module.exports = {
         // })
       })
       .catch((error) => {
-        response(res, [], error.status_code, 'Login failed', null, error)
+        console.log(error)
+        response(res, [], 400, 'Login failed', null, error)
       })
   }
 }
