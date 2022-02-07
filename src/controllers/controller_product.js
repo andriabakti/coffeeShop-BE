@@ -11,7 +11,6 @@ const { response, message, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {
 	createProduct: (req, res) => {
-		console.log(req.file)
 		const { name, price, description, category_id } = req.body
 		const { URL } = process.env
 		const data = {
@@ -78,7 +77,7 @@ module.exports = {
 	},
 	updateProduct: (req, res) => {
 		const { id } = req.params
-		const { name, price, description, category_id, image } = req.body
+		const { name, price, description, category_id } = req.body
 		const { URL } = process.env
 		const data = {
 			name,

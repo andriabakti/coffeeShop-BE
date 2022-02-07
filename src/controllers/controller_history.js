@@ -40,7 +40,6 @@ module.exports = {
   readAllOrder: (_req, res) => {
     getAllOrder()
       .then((result) => {
-        console.log(result);
         response(res, result, res.statusCode, message.found, null, null)
       })
       .catch((error) => {

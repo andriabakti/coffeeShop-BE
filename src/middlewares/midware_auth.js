@@ -15,6 +15,7 @@ module.exports = {
 
       // TODO: kirim data
       // req.role = decoded.role
+      // req.nama = 'Andria'
       // diteruskan ke controller untuk checkAdmin
       // gunakan if else
     })
