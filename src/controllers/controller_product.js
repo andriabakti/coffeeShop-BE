@@ -8,17 +8,19 @@ const {
 	getTotal
 } = require('../models/model_product')
 const { response, message, pageInfo } = require('../helpers/helper_resp')
+const fs = require('fs')
 
 module.exports = {
 	createProduct: (req, res) => {
 		const { name, price, description, category_id } = req.body
 		const { URL } = process.env
+		const image = req.file ? `${URL}/uploads/${req.file.filename}` : null
 		const data = {
 			name,
 			price,
 			description,
 			category_id,
-			image: `${URL}/uploads/${req.file.filename}`,
+			image,
 			created_at: new Date()
 		}
 		insertProduct(data)
@@ -75,7 +77,7 @@ module.exports = {
 				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	updateProduct: (req, res) => {
+	updateProduct: async (req, res) => {
 		const { id } = req.params
 		const { name, price, description, category_id } = req.body
 		const { URL } = process.env
@@ -87,7 +89,20 @@ module.exports = {
 			image: `${URL}/uploads/${req.file.filename}`,
 			updated_at: new Date()
 		}
-		editProduct(data, id)
+		await getProductById(id)
+			.then((result) => {
+				if (result[0].image !== null) {
+					let image = result[0].image.slice(30)
+					fs.unlink(`./uploads/${image}`, (err) => {
+						if (!err) {
+							console.log(`Stored image: ${image} is succesfully deleted`);
+						} else {
+							console.log(err);
+						}
+					})
+				}
+			})
+		await editProduct(data, id)
 			.then((result) => {
 				response(res, {}, res.statusCode, message.update, null, null)
 			})
@@ -95,9 +110,22 @@ module.exports = {
 				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	deleteProduct: (req, res) => {
+	deleteProduct: async (req, res) => {
 		const { id } = req.params
-		removeProduct(id)
+		await getProductById(id)
+			.then((result) => {
+				if (result[0].image !== null) {
+					let image = result[0].image.slice(30)
+					fs.unlink(`./uploads/${image}`, (err) => {
+						if (!err) {
+							console.log(`Stored image: ${image} is succesfully deleted`);
+						} else {
+							console.log(err);
+						}
+					})
+				}
+			})
+		await removeProduct(id)
 			.then((result) => {
 				response(res, {}, res.statusCode, message.delete, null, null)
 			})
