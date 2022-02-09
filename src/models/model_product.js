@@ -6,8 +6,7 @@ module.exports = {
 	},
 	getAllProduct: (search, sort, order, limit, offset) => {
 		return queryHelper(
-			`SELECT * FROM products ${
-				search ? `WHERE products.name LIKE %${search}%` : ''
+			`SELECT * FROM products ${search ? `WHERE name LIKE '%${search}%'` : ''
 			} ORDER BY ${sort} ${order} LIMIT ${limit} OFFSET ${offset}`
 		)
 	},
