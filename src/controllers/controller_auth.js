@@ -2,7 +2,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const {
-  registerUser,
+  createUser,
+  createUserDetail,
   getUserByEmail
 } = require('../models/model_user')
 const {
@@ -24,12 +25,24 @@ module.exports = {
           email,
           password: hash,
           phone,
-          role,
-          status: 2
+          role
         }
-        registerUser(newUser)
+        createUser(newUser)
           .then((result) => {
-            response(res, result, res.statusCode, 'Register success', null, null)
+            // console.log(result);
+            let user_id = result.insertId
+            const data = {
+              user_id,
+              created_at: new Date()
+            }
+            createUserDetail(data)
+              .then((_result) => {
+                response(res, {}, res.statusCode, 'User register & user detail sucess', null, null)
+              })
+              .catch((error) => {
+                response(res, [], error.statusCode, null, null, error)
+              })
+            // response(res, result, res.statusCode, 'Register success', null, null)
           })
           .catch((error) => {
             response(res, [], 400, 'Register failed', null, error)
