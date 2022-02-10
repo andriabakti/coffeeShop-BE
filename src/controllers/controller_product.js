@@ -78,15 +78,16 @@ module.exports = {
 			})
 	},
 	updateProduct: async (req, res) => {
+		const { URL } = process.env
 		const { id } = req.params
 		const { name, price, description, category_id } = req.body
-		const { URL } = process.env
+		const image = req.file ? `${URL}/uploads/${req.file.filename}` : null
 		const data = {
 			name,
 			price,
 			description,
 			category_id,
-			image: `${URL}/uploads/${req.file.filename}`,
+			image,
 			updated_at: new Date()
 		}
 		await getProductById(id)
