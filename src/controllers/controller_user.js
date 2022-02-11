@@ -65,7 +65,7 @@ module.exports = {
       last_name,
       birth_date,
       gender,
-      address,
+      address
     } = req.body
     const data = {
       username,
@@ -82,25 +82,27 @@ module.exports = {
       image,
       updated_at: new Date()
     }
-    await checkImage(id)
-      .then((result) => {
-        if (result[0].image !== null) {
-          let image = result[0].image.slice(30)
-          fs.unlink(`./uploads/${image}`, (err) => {
-            if (!err) {
-              console.log(`Stored image: ${image} is succesfully deleted`);
-            } else {
-              console.log(err);
-            }
-          })
-        }
-      })
+    await checkImage(id).then((result) => {
+      if (
+        result[0].image !== null &&
+        image === null
+      ) {
+        let oldImage = result[0].image.slice(30)
+        fs.unlink(`./uploads/${oldImage}`, (err) => {
+          if (!err) {
+            console.log(`Stored image: ${oldImage} is succesfully deleted`)
+          } else {
+            console.log(err)
+          }
+        })
+      }
+    })
     await modifyUser(data, detail, id)
       .then((result) => {
         response(res, {}, res.statusCode, message.update, null, null)
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
         response(res, [], error.statusCode, null, null, error)
       })
   },

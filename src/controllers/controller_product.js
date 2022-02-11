@@ -92,11 +92,14 @@ module.exports = {
 		}
 		await getProductById(id)
 			.then((result) => {
-				if (result[0].image !== null) {
-					let image = result[0].image.slice(30)
-					fs.unlink(`./uploads/${image}`, (err) => {
+				if (
+					result[0].image !== null &&
+					image === null
+				) {
+					let oldImage = result[0].image.slice(30)
+					fs.unlink(`./uploads/${oldImage}`, (err) => {
 						if (!err) {
-							console.log(`Stored image: ${image} is succesfully deleted`);
+							console.log(`Stored image: ${oldImage} is succesfully deleted`);
 						} else {
 							console.log(err);
 						}
