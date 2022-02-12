@@ -10,7 +10,6 @@ module.exports = {
       payment,
       created_at: new Date()
     }
-
     insertOrderDetail(details)
       .then((result) => {
         let order_id = result.insertId
