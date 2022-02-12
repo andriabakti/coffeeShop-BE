@@ -103,7 +103,7 @@ module.exports = {
       })
       .catch((error) => {
         console.log(error)
-        response(res, [], error.statusCode, null, null, error)
+        response(res, [], error.statusCode, 'Profile failed to updated', null, error)
       })
   },
   deleteUser: (req, res) => {

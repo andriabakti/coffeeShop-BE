@@ -9,6 +9,7 @@ const {
 } = require('../models/model_product')
 const { response, message, pageInfo } = require('../helpers/helper_resp')
 const fs = require('fs')
+const { log } = require('console')
 
 module.exports = {
 	createProduct: (req, res) => {
@@ -32,7 +33,8 @@ module.exports = {
 			})
 	},
 	readAllProduct: (req, res) => {
-		const search = req.query.search || null
+		const search = req.query.search
+		const filter = req.query.filter
 		const sort = req.query.sort || 'id'
 		const order = req.query.order || 'ASC'
 		const limit = Number(req.query.limit) || 3
@@ -40,7 +42,7 @@ module.exports = {
 		const offset = (page === 0 ? 1 : page - 1) * limit
 
 		if (search) {
-			getSearch(search)
+			getSearch(search, filter)
 				.then((result) => {
 					totalData = result.length
 				})
@@ -48,7 +50,7 @@ module.exports = {
 					console.log(error)
 				})
 		} else {
-			getTotal()
+			getTotal(filter)
 				.then((result) => {
 					totalData = result[0].total
 				})
@@ -56,7 +58,7 @@ module.exports = {
 					console.log(error)
 				})
 		}
-		getAllProduct(search, sort, order, limit, offset)
+		getAllProduct(search, filter, sort, order, limit, offset)
 			.then((result) => {
 				const count = result.length
 				const total = parseInt(totalData)
@@ -64,7 +66,8 @@ module.exports = {
 				response(res, result, res.statusCode, message.found, links, null)
 			})
 			.catch((error) => {
-				response(res, [], error.statusCode, null, null, error)
+				console.log(error);
+				response(res, error, error.status_code, error.message, null, error)
 			})
 	},
 	readProductById: (req, res) => {
@@ -74,7 +77,7 @@ module.exports = {
 				response(res, result, res.statusCode, message.found, null, null)
 			})
 			.catch((error) => {
-				response(res, {}, error.statusCode, null, null, error)
+				response(res, null, error.status_code, null, null, error)
 			})
 	},
 	updateProduct: async (req, res) => {

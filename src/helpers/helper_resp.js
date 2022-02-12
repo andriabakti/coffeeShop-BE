@@ -1,14 +1,17 @@
 module.exports = {
 	response: (res, result, status, message, link, error) => {
 		const resp = {}
-		resp.success = !error
 		if (!error) {
+			resp.success = !error
 			resp.status_code = status || null
 			resp.message = message || null
+			resp.data = result
 		} else {
-			resp.error = error
+			resp.success = !error
+			resp.status_code = error.status_code || null
+			resp.message = error.message
+			resp.data = []
 		}
-		resp.data = result
 		if (link) {
 			resp.page_info = link
 		}
