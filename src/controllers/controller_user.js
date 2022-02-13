@@ -85,7 +85,8 @@ module.exports = {
     await checkImage(id).then((result) => {
       if (
         result[0].image !== null &&
-        image === null
+        (image !== result[0].image ||
+          image === null)
       ) {
         let oldImage = result[0].image.slice(30)
         fs.unlink(`./uploads/${oldImage}`, (err) => {

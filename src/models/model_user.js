@@ -1,4 +1,6 @@
-const { queryHelper } = require('../helpers/helper_query')
+const {
+  queryHelper
+} = require('../helpers/helper_query')
 
 module.exports = {
   createUser: (data) => {
@@ -28,29 +30,33 @@ module.exports = {
     return queryHelper('SELECT image FROM user_details WHERE user_id = ?', id)
   },
   modifyUser: (data, detail, id) => {
-    const { username, email, phone, updated_at } = data
-    const { first_name, last_name, birth_date, gender, address, image } = detail
+    const {
+      username,
+      email,
+      phone,
+      updated_at
+    } = data
+    const {
+      first_name,
+      last_name,
+      birth_date,
+      gender,
+      address,
+      image
+    } = detail
+
+    const setData =
+      `SET A.username = '${username}', A.email = '${email}',
+      A.phone = '${phone}', A.updated_at = '${updated_at}',`
+    const setDetail =
+      `B.first_name = '${first_name}', B.last_name = '${last_name}',
+      B.birth_date = '${birth_date}', B.gender = '${gender}',
+      B.address = '${address}', B.image = ?,
+      B.updated_at = '${detail.updated_at}'`
     return queryHelper(
       `UPDATE users A INNER JOIN user_details B ON A.id = B.user_id
-      SET A.username = ?, A.email = ?, A.phone = ?, A.updated_at = ?,
-      B.first_name = ?, B.last_name = ?, B.birth_date = ?, B.gender = ?,
-      B.address = ?, B.image = ?, B.updated_at = ?
-      WHERE A.id = ? AND B.user_id = ?`,
-      [
-        username,
-        email,
-        phone,
-        updated_at,
-        first_name,
-        last_name,
-        birth_date,
-        gender,
-        address,
-        image,
-        detail.updated_at,
-        id,
-        id
-      ]
+      ${setData} ${setDetail} WHERE A.id = ? AND B.user_id = ?`,
+      [image, id, id]
     )
   },
   removeUser: (id) => {
