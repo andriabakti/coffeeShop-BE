@@ -5,6 +5,7 @@ module.exports = {
 		return queryHelper('INSERT INTO products SET ?', data)
 	},
 	getAllProduct: (search, filter, sort, order, limit, offset) => {
+		let query = ''
 		if (search !== '' && filter !== '') {
 			query = `WHERE name LIKE '%${search}%' AND category_id = ${filter}`
 		} else if (search !== '' && filter === '') {
