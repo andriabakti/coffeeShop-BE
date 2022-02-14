@@ -47,16 +47,16 @@ module.exports = {
 
     const setData =
       `SET A.username = '${username}', A.email = '${email}',
-      A.phone = '${phone}', A.updated_at = '${updated_at}',`
+      A.phone = '${phone}', A.updated_at = ?,`
     const setDetail =
       `B.first_name = '${first_name}', B.last_name = '${last_name}',
       B.birth_date = '${birth_date}', B.gender = '${gender}',
       B.address = '${address}', B.image = ?,
-      B.updated_at = '${detail.updated_at}'`
+      B.updated_at = ?`
     return queryHelper(
       `UPDATE users A INNER JOIN user_details B ON A.id = B.user_id
       ${setData} ${setDetail} WHERE A.id = ? AND B.user_id = ?`,
-      [image, id, id]
+      [updated_at, image, detail.updated_at, id, id]
     )
   },
   removeUser: (id) => {
