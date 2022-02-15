@@ -42,7 +42,8 @@ module.exports = {
         response(res, result, res.statusCode, message.found, null, null)
       })
       .catch((error) => {
-        response(res, [], error.statusCode, null, null, error)
+        console.log(error);
+        response(res, error, error.status_code, error.message, null, error)
       })
   },
   deleteOrder: (req, res) => {
