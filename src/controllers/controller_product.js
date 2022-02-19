@@ -84,7 +84,14 @@ module.exports = {
 		const { URL } = process.env
 		const { id } = req.params
 		const { name, price, description, category_id } = req.body
-		const image = req.file ? `${URL}/uploads/${req.file.filename}` : null
+		let image
+		if (req.file) {
+			image = `${URL}/uploads/${req.file.filename}`
+		} else if (req.body.image === 'null') {
+			image = null
+		} else if (req.body.image) {
+			image = req.body.image
+		}
 		const data = {
 			name,
 			price,
@@ -97,7 +104,8 @@ module.exports = {
 			.then((result) => {
 				if (
 					result[0].image !== null &&
-					image === null
+					(image !== result[0].image ||
+						image === null)
 				) {
 					let oldImage = result[0].image.slice(30)
 					fs.unlink(`./uploads/${oldImage}`, (err) => {

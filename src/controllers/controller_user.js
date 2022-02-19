@@ -56,7 +56,6 @@ module.exports = {
   updateUser: async (req, res) => {
     const { URL } = process.env
     const { id } = req.params
-    const image = req.file ? `${URL}/uploads/${req.file.filename}` : null
     const {
       username,
       email,
@@ -73,6 +72,14 @@ module.exports = {
       phone,
       updated_at: new Date()
     }
+    let image
+    if (req.file) {
+      image = `${URL}/uploads/${req.file.filename}`
+    } else if (req.body.image === 'null') {
+      image = null
+    } else if (req.body.image) {
+      image = req.body.image
+    }
     const detail = {
       first_name,
       last_name,
@@ -85,8 +92,7 @@ module.exports = {
     await checkImage(id).then((result) => {
       if (
         result[0].image !== null &&
-        (image !== result[0].image ||
-          image === null)
+        (image !== result[0].image || image === null)
       ) {
         let oldImage = result[0].image.slice(30)
         fs.unlink(`./uploads/${oldImage}`, (err) => {
@@ -104,7 +110,14 @@ module.exports = {
       })
       .catch((error) => {
         console.log(error)
-        response(res, [], error.statusCode, 'Profile failed to updated', null, error)
+        response(
+          res,
+          [],
+          error.statusCode,
+          'Profile failed to updated',
+          null,
+          error
+        )
       })
   },
   deleteUser: (req, res) => {
