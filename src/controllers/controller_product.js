@@ -9,7 +9,6 @@ const {
 } = require('../models/model_product')
 const { response, message, pageInfo } = require('../helpers/helper_resp')
 const fs = require('fs')
-const { log } = require('console')
 
 module.exports = {
 	createProduct: (req, res) => {
