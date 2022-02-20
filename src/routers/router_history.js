@@ -9,6 +9,6 @@ const {
 
 router
   .post('/', createOrder)
-  .get('/', readAllOrder)
+  .get('/:id', readAllOrder)
   .delete('/:id', deleteOrder)
 module.exports = router

@@ -1,5 +1,11 @@
-const { response, message } = require('../helpers/helper_resp')
-const { insertOrderDetail, insertOrderItem, getAllOrder, removeOrder } = require('../models/model_history')
+const {
+  insertOrderDetail,
+  insertOrderItem,
+  getAllOrder,
+  getTotal,
+  removeOrder
+} = require('../models/model_history')
+const { response, message, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {
   createOrder: (req, res) => {
@@ -13,36 +19,53 @@ module.exports = {
     insertOrderDetail(details)
       .then((result) => {
         let order_id = result.insertId
-        req.body.items.map(item => {
+        req.body.items.map((item) => {
           const data = {
             order_id: order_id,
+            user_id: id,
             product_id: item.id,
             quantity: item.quantity,
             size: item.size,
             delivery: item.delivery,
             created_at: new Date()
           }
-          insertOrderItem(data)
-            .then((_result) => {
-              response(res, {}, res.statusCode, message.insert, null, null)
-            })
-            .catch((error) => {
-              response(res, [], error.statusCode, null, null, error)
-            })
+          insertOrderItem(data).then((_result) => {
+            response(res, {}, res.statusCode, message.insert, null, null)
+          })
+          // .catch((error) => {
+          //   response(res, [], error.statusCode, null, null, error)
+          // })
           // response(res, {}, res.statusCode, message.insert, null, null)
         })
       })
       .catch((error) => {
-        response(res, [], error.statusCode, null, null, error)
+        console.log(error);
+        response(res, error, error.status_code, error.message, null, error)
       })
   },
-  readAllOrder: (_req, res) => {
-    getAllOrder()
+  readAllOrder: (req, res) => {
+    const order = req.query.order || 'DESC'
+    const limit = Number(req.query.limit) || 3
+    const page = Number(req.query.page) || 1
+    const offset = (page === 0 ? 1 : page - 1) * limit
+    const { id } = req.params
+
+    getTotal()
       .then((result) => {
-        response(res, result, res.statusCode, message.found, null, null)
+        totalData = result[0].total
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
+      })
+    getAllOrder(order, limit, offset, id)
+      .then((result) => {
+        const count = result.length
+        const total = parseInt(totalData)
+        const links = pageInfo(limit, page, total, count)
+        response(res, result, res.statusCode, message.found, links, null)
+      })
+      .catch((error) => {
+        console.log(error)
         response(res, error, error.status_code, error.message, null, error)
       })
   },
