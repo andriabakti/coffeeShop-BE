@@ -124,26 +124,18 @@ module.exports = {
 				response(res, {}, error.statusCode, null, null, error)
 			})
 	},
-	deleteProduct: async (req, res) => {
+	deleteProduct: (req, res) => {
 		const { id } = req.params
-		await getProductById(id)
-			.then((result) => {
-				if (result[0].image !== null) {
-					let image = result[0].image.slice(30)
-					fs.unlink(`./uploads/${image}`, (err) => {
-						if (!err) {
-							console.log(`Stored image: ${image} is succesfully deleted`);
-						} else {
-							console.log(err);
-						}
-					})
-				}
-			})
-		await removeProduct(id)
-			.then((result) => {
+		const data = {
+			is_deleted: true,
+			deleted_at: new Date()
+		}
+		removeProduct(data, id)
+			.then((_result) => {
 				response(res, {}, res.statusCode, message.delete, null, null)
 			})
 			.catch((error) => {
+				console.log(error);
 				response(res, {}, error.statusCode, null, null, error)
 			})
 	}

@@ -7,14 +7,14 @@ module.exports = {
 	getAllProduct: (search, filter, sort, order, limit, offset) => {
 		let query = ''
 		if (search !== '' && filter !== '') {
-			query = `WHERE name LIKE '%${search}%' AND category_id = ${filter}`
+			query = `AND name LIKE '%${search}%' AND category_id = ${filter}`
 		} else if (search !== '' && filter === '') {
-			query = `WHERE name LIKE '%${search}%'`
+			query = `AND name LIKE '%${search}%'`
 		} else if (filter !== '' && search === '') {
-			query = `WHERE category_id = ${filter}`
+			query = `AND category_id = ${filter}`
 		}
 		return queryHelper(
-			`SELECT * FROM products ${query}
+			`SELECT * FROM products WHERE is_deleted IS FALSE ${query}
 			ORDER BY ${sort} ${order} LIMIT ${limit} OFFSET ${offset}`
 		)
 	},
@@ -37,7 +37,7 @@ module.exports = {
 	editProduct: (data, id) => {
 		return queryHelper('UPDATE products SET ? WHERE id = ?', [data, id])
 	},
-	removeProduct: (id) => {
-		return queryHelper('DELETE FROM products WHERE id = ?', id)
+	removeProduct: (deleted, id) => {
+		return queryHelper('UPDATE products SET ? WHERE id = ?', [deleted, id])
 	}
 }

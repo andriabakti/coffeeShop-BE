@@ -83,7 +83,7 @@ module.exports = {
       })
       .catch((error) => {
         console.log(error)
-        response(res, [], res.status_code, 'Login failed', null, error)
+        response(res, [], res.status_code, 'User not found', null, error)
       })
   }
 }
