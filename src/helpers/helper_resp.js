@@ -1,15 +1,15 @@
 module.exports = {
 	response: (res, result, status, message, link, error) => {
 		const resp = {}
-		if (!error) {
-			resp.success = !error
+		if (error === null) {
+			resp.success = true
 			resp.status_code = status || null
 			resp.message = message || null
 			resp.data = result
 		} else {
-			resp.success = !error
-			resp.status_code = error.status_code || null
-			resp.message = error.message
+			resp.success = error
+			resp.status_code = status || null
+			resp.message = message || null
 			resp.data = []
 		}
 		if (link) {

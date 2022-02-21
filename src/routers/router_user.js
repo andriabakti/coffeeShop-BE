@@ -9,13 +9,16 @@ const {
   deleteUser
 } = require('../controllers/controller_user')
 const {
+  verifyAccess
+} = require('../middlewares/midware_auth')
+const {
   upload
 } = require('../middlewares/midware_multer')
 
 router
   .get('/', readAllCustomer)
   .get('/admin', readAllAdmin)
-  .get('/:id', readUserDetail)
-  .patch('/:id', upload.single('image'), updateUser)
+  .get('/:id', verifyAccess, readUserDetail)
+  .patch('/:id', verifyAccess, upload.single('image'), updateUser)
   .delete('/:id', deleteUser)
 module.exports = router

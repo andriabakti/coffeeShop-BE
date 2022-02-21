@@ -6,9 +6,12 @@ const {
   readAllOrder,
   deleteOrder
 } = require('../controllers/controller_history')
+const {
+  verifyAccess
+} = require('../middlewares/midware_auth')
 
 router
-  .post('/', createOrder)
-  .get('/:id', readAllOrder)
+  .post('/', verifyAccess, createOrder)
+  .get('/:id', verifyAccess, readAllOrder)
   .delete('/:id', deleteOrder)
 module.exports = router
