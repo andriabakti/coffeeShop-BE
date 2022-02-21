@@ -37,7 +37,7 @@ module.exports = {
             }
             createUserDetail(data)
               .then((_result) => {
-                response(res, {}, res.statusCode, 'User register & user detail sucess', null, null)
+                response(res, {}, res.statusCode, 'Sign-up success', null, null)
               })
               .catch((error) => {
                 response(res, [], error.statusCode, null, null, error)

@@ -19,24 +19,23 @@ module.exports = {
     insertOrderDetail(details)
       .then((result) => {
         let order_id = result.insertId
-        req.body.items.map((item) => {
-          const data = {
-            order_id: order_id,
-            user_id: id,
-            product_id: item.id,
-            quantity: item.quantity,
-            size: item.size,
-            delivery: item.delivery,
-            created_at: new Date()
-          }
-          insertOrderItem(data).then((_result) => {
+        const data = req.body.items.map((item) => ({
+          order_id: order_id,
+          user_id: id,
+          product_id: item.id,
+          quantity: item.quantity,
+          size: item.size,
+          delivery: item.delivery,
+          created_at: new Date()
+        }))
+        insertOrderItem(data)
+          .then((result) => {
             response(res, {}, res.statusCode, message.insert, null, null)
           })
-          // .catch((error) => {
-          //   response(res, [], error.statusCode, null, null, error)
-          // })
-          // response(res, {}, res.statusCode, message.insert, null, null)
-        })
+          .catch((error) => {
+            console.log(error);
+            response(res, error, error.status_code, error.message, null, error)
+          })
       })
       .catch((error) => {
         console.log(error);
