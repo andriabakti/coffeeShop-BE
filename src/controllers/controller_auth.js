@@ -39,9 +39,9 @@ module.exports = {
               .then((_result) => {
                 response(res, {}, res.statusCode, 'Sign-up success', null, null)
               })
-              .catch((error) => {
-                response(res, [], error.statusCode, null, null, error)
-              })
+            // .catch((error) => {
+            //   response(res, [], error.statusCode, null, null, error)
+            // })
             // response(res, result, res.statusCode, 'Register success', null, null)
           })
           .catch((error) => {
