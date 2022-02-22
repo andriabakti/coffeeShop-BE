@@ -14,8 +14,10 @@ app.use(
 	}),
 	json()
 )
-app.use(cors())
-app.options('*', cors())
+app.use(cors({
+	origin: 'https://andria-coffeeteria.netlify.app',
+	credentials: true
+}))
 app.use(logger('dev'))
 app.use('/api/v1', routes)
 app.use('/uploads', static('./uploads'))
