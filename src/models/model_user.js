@@ -26,9 +26,6 @@ module.exports = {
       id
     )
   },
-  checkImage: (id) => {
-    return queryHelper('SELECT image FROM user_details WHERE user_id = ?', id)
-  },
   modifyUser: (data, detail, id) => {
     const {
       username,

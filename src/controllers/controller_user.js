@@ -2,12 +2,10 @@ const {
   getAllCustomer,
   getAllAdmin,
   getUserDetailById,
-  checkImage,
   modifyUser,
   removeUser
 } = require('../models/model_user')
 const { response, message } = require('../helpers/helper_resp')
-const fs = require('fs')
 
 module.exports = {
   readAllCustomer: (req, res) => {
@@ -89,22 +87,7 @@ module.exports = {
       image,
       updated_at: new Date()
     }
-    await checkImage(id).then((result) => {
-      if (
-        result[0].image !== null &&
-        (image !== result[0].image || image === null)
-      ) {
-        let oldImage = result[0].image.slice(30)
-        fs.unlink(`./uploads/${oldImage}`, (err) => {
-          if (!err) {
-            console.log(`Stored image: ${oldImage} is succesfully deleted`)
-          } else {
-            console.log(err)
-          }
-        })
-      }
-    })
-    await modifyUser(data, detail, id)
+    modifyUser(data, detail, id)
       .then((result) => {
         response(res, {}, res.statusCode, message.update, null, null)
       })

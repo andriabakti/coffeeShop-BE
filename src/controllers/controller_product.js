@@ -8,7 +8,6 @@ const {
 	getTotal
 } = require('../models/model_product')
 const { response, message, pageInfo } = require('../helpers/helper_resp')
-const fs = require('fs')
 
 module.exports = {
 	createProduct: (req, res) => {
@@ -99,24 +98,7 @@ module.exports = {
 			image,
 			updated_at: new Date()
 		}
-		await getProductById(id)
-			.then((result) => {
-				if (
-					result[0].image !== null &&
-					(image !== result[0].image ||
-						image === null)
-				) {
-					let oldImage = result[0].image.slice(30)
-					fs.unlink(`./uploads/${oldImage}`, (err) => {
-						if (!err) {
-							console.log(`Stored image: ${oldImage} is succesfully deleted`);
-						} else {
-							console.log(err);
-						}
-					})
-				}
-			})
-		await editProduct(data, id)
+		editProduct(data, id)
 			.then((result) => {
 				response(res, {}, res.statusCode, message.update, null, null)
 			})
