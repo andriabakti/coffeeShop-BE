@@ -15,8 +15,7 @@ app.use(
 	json()
 )
 app.use(cors({
-	origin: 'https://andria-coffeeteria.netlify.app',
-	credentials: true
+	origin: false,
 }))
 app.use(logger('dev'))
 app.use('/api/v1', routes)
