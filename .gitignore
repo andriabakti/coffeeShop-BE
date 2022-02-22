@@ -1,5 +1,4 @@
 node_modules
-uploads/*
 *.example.md
 *.env
 .todo
