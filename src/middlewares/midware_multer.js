@@ -10,7 +10,6 @@ const storage = multer.diskStorage({
     const date = new Date().toDateString().split(' ').join('_')
     const time = new Date().toLocaleTimeString('id')
     const name = file.originalname.split(' ').join('_')
-    console.log(time);
     cb(null, `${unique}-${date}-${time}-${name}`)
   }
 })

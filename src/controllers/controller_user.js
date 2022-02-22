@@ -48,6 +48,7 @@ module.exports = {
         response(res, result, res.statusCode, message.found, null, null)
       })
       .catch((error) => {
+        console.log(error);
         response(res, [], error.statusCode, null, null, error)
       })
   },

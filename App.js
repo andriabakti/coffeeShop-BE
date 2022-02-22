@@ -15,6 +15,7 @@ app.use(
 	json()
 )
 app.use(cors())
+app.options('*', cors())
 app.use(logger('dev'))
 app.use('/api/v1', routes)
 app.use('/uploads', static('./uploads'))
