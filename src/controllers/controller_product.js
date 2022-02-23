@@ -13,13 +13,13 @@ module.exports = {
 	createProduct: (req, res) => {
 		const { name, price, description, category_id } = req.body
 		const { URL } = process.env
-		const image = req.file ? `${URL}/uploads/${req.file.filename}` : null
+		console.log(req.file.path);
 		const data = {
 			name,
 			price,
 			description,
 			category_id,
-			image,
+			image: req.file.path,
 			created_at: new Date()
 		}
 		insertProduct(data)
@@ -84,7 +84,7 @@ module.exports = {
 		const { name, price, description, category_id } = req.body
 		let image
 		if (req.file) {
-			image = `${URL}/uploads/${req.file.filename}`
+			image = req.file.path
 		} else if (req.body.image === 'null') {
 			image = null
 		} else if (req.body.image) {
