@@ -19,7 +19,7 @@ module.exports = {
     // if result >= 0 ? response
     const rounds = 10
     bcrypt.genSalt(rounds, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
+      bcrypt.hash(password, salt, async (err, hash) => {
         const newUser = {
           username,
           email,
@@ -27,22 +27,14 @@ module.exports = {
           phone,
           role
         }
-        createUser(newUser)
-          .then((result) => {
-            // console.log(result);
-            let user_id = result.insertId
-            const data = {
-              user_id,
-              created_at: new Date()
-            }
-            createUserDetail(data)
-              .then((_result) => {
-                response(res, {}, res.statusCode, 'Sign-up success', null, null)
-              })
-            // .catch((error) => {
-            //   response(res, [], error.statusCode, null, null, error)
-            // })
-            // response(res, result, res.statusCode, 'Register success', null, null)
+        const register = await createUser(newUser)
+        const data = {
+          user_id: register.insertId,
+          created_at: new Date()
+        }
+        await createUserDetail(data)
+          .then((_result) => {
+            response(res, {}, res.statusCode, 'Register success', null, null)
           })
           .catch((error) => {
             response(res, [], 400, 'Register failed', null, error)

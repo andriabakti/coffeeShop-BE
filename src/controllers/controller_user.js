@@ -49,7 +49,7 @@ module.exports = {
       })
       .catch((error) => {
         console.log(error);
-        response(res, [], error.statusCode, null, null, error)
+        response(res, [], error.status_code, error.message, null, error)
       })
   },
   updateUser: async (req, res) => {
