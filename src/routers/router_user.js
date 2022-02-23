@@ -11,14 +11,12 @@ const {
 const {
   verifyAccess
 } = require('../middlewares/midware_auth')
-const {
-  upload
-} = require('../middlewares/midware_multer')
+const upload = require('../middlewares/midware_multer')
 
 router
   .get('/', readAllCustomer)
   .get('/admin', readAllAdmin)
   .get('/:id', verifyAccess, readUserDetail)
-  .patch('/:id', verifyAccess, upload.single('image'), updateUser)
+  .patch('/:id', verifyAccess, upload, updateUser)
   .delete('/:id', deleteUser)
 module.exports = router

@@ -73,7 +73,7 @@ module.exports = {
     }
     let image
     if (req.file) {
-      image = `${URL}/uploads/${req.file.filename}`
+      image = req.file.path
     } else if (req.body.image === 'null') {
       image = null
     } else if (req.body.image) {
@@ -83,8 +83,8 @@ module.exports = {
       first_name,
       last_name,
       birth_date,
-      gender,
-      address,
+      gender: gender === null ? '' : gender,
+      address: address === null ? '' : address,
       image,
       updated_at: new Date()
     }
