@@ -53,7 +53,6 @@ module.exports = {
       })
   },
   updateUser: async (req, res) => {
-    const { URL } = process.env
     const { id } = req.params
     const {
       username,
