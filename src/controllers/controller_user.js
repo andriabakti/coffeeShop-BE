@@ -82,8 +82,8 @@ module.exports = {
       first_name,
       last_name,
       birth_date,
-      gender: gender === null ? '' : gender,
-      address: address === null ? '' : address,
+      gender: gender === 'null' ? null : gender,
+      address,
       image,
       updated_at: new Date()
     }
