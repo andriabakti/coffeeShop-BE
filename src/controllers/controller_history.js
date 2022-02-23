@@ -17,9 +17,9 @@ module.exports = {
       created_at: new Date()
     }
     insertOrderDetail(details)
-      .then((result) => {
+      .then(async (result) => {
         let order_id = result.insertId
-        const data = req.body.items.map((item) => ({
+        const data = await req.body.items.map((item) => ({
           order_id: order_id,
           user_id: id,
           product_id: item.id,
@@ -28,7 +28,7 @@ module.exports = {
           delivery: item.delivery,
           created_at: new Date()
         }))
-        insertOrderItem(data)
+        await insertOrderItem(data)
           .then((result) => {
             response(res, {}, res.statusCode, message.insert, null, null)
           })
