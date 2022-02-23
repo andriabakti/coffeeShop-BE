@@ -13,7 +13,6 @@ module.exports = {
 	createProduct: (req, res) => {
 		const { name, price, description, category_id } = req.body
 		const { URL } = process.env
-		console.log(req.file.path);
 		const data = {
 			name,
 			price,
