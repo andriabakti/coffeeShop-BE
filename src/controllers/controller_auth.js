@@ -17,30 +17,31 @@ module.exports = {
     // check email from db with model
     // isUser = await checkEmail(email)
     // if result >= 0 ? response
-    const rounds = 10
-    bcrypt.genSalt(rounds, (err, salt) => {
-      bcrypt.hash(password, salt, async (err, hash) => {
-        const newUser = {
-          username,
-          email,
-          password: hash,
-          phone,
-          role
-        }
-        const register = await createUser(newUser)
+    const salt = bcrypt.genSaltSync(10)
+    const hash = bcrypt.hashSync(password, salt)
+    const newUser = {
+      username,
+      email,
+      password: hash,
+      phone,
+      role,
+      created_at: new Date()
+    }
+    createUser(newUser)
+      .then((result) => {
         const data = {
-          user_id: register.insertId,
+          user_id: result.insertId,
           created_at: new Date()
         }
-        await createUserDetail(data)
+        createUserDetail(data)
           .then((_result) => {
             response(res, {}, res.statusCode, 'Register success', null, null)
           })
           .catch((error) => {
-            response(res, [], 400, 'Register failed', null, error)
+            console.log(error);
+            response(res, [], error.statusCode, 'Register failed', null, error)
           })
       })
-    })
   },
   signIn: (req, res) => {
     const { email, password } = req.body
