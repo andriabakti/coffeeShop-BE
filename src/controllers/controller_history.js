@@ -28,6 +28,7 @@ module.exports = {
           delivery: item.delivery,
           created_at: new Date()
         }))
+        console.log(data);
         insertOrderItem(data)
           .then((result) => {
             response(res, {}, res.statusCode, message.insert, null, null)
