@@ -4,8 +4,10 @@ module.exports = {
   insertOrderDetail: (details) => {
     return queryHelper('INSERT INTO order_details SET ?', details)
   },
-  insertOrderItem: (items) => {
-    return queryHelper('INSERT INTO order_items SET ?', items)
+  insertOrderItem: (order, id, items) => {
+    return queryHelper('INSERT INTO order_items (order_id, user_id, product_id, quantity, size, delivery, created_at) VALUES ?',
+      [items.map(item => [order, id, item.id, item.quantity, item.size, item.delivery, new Date()])]
+    )
   },
   getAllOrder: (order, limit, offset, id) => {
     return queryHelper(

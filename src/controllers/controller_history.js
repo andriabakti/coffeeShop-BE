@@ -9,7 +9,7 @@ const { response, message, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {
   createOrder: (req, res) => {
-    const { id, total, payment } = req.body
+    const { id, total, payment, items } = req.body
     const details = {
       user_id: id,
       total,
@@ -19,17 +19,7 @@ module.exports = {
     insertOrderDetail(details)
       .then((result) => {
         let order_id = result.insertId
-        const data = req.body.items.map((item) => ({
-          order_id: order_id,
-          user_id: id,
-          product_id: item.id,
-          quantity: item.quantity,
-          size: item.size,
-          delivery: item.delivery,
-          created_at: new Date()
-        }))
-        console.log(data);
-        insertOrderItem(data)
+        insertOrderItem(order_id, id, items)
           .then((result) => {
             response(res, {}, res.statusCode, message.insert, null, null)
           })
