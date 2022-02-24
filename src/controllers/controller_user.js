@@ -65,7 +65,7 @@ module.exports = {
       address
     } = req.body
     const data = {
-      username,
+      username: username === 'null' ? null : username,
       email,
       phone,
       updated_at: new Date()
@@ -83,7 +83,7 @@ module.exports = {
       last_name,
       birth_date,
       gender: gender === 'null' ? null : gender,
-      address,
+      address: address === 'null' ? null : address,
       image,
       updated_at: new Date()
     }
