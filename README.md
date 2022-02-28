@@ -2,7 +2,7 @@
   <h1 align="center">CoffeTeria - API</h1>
 </p>
 
-This is the API for CoffeeTeria, a web-based café or coffee shop application where the customer can be easily orders available foods & beverages in the menu by their own self. This API built with:
+This is the API for CoffeeTeria, a web-based café or coffee shop application where the customer can be easily orders the available foods & beverages in the menu by their own self. This API is built with:
 
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
@@ -52,7 +52,7 @@ DB_HOST='localhost'
 DB_USER='your_database_user'
 DB_PASSWORD='your_database_password'
 DB_NAME='db_coffeeteria'
-# ENV: Clodinary
+# ENV: Cloudinary
 CLOUD_NAME='your_cloudinary_cloud_name'
 CLOUD_KEY='your_cloudinary_API_key'
 CLOUD_SECRET='your_cloudinary_API_secret'
