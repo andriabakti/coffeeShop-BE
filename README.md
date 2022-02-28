@@ -1,11 +1,5 @@
-<style>
-  #title {
-    border-bottom: none
-  }
-</style>
-
 <p align="center">
-  <h1 align="center" id="title">CoffeTeria - API</h1>
+  <h1 align="center">CoffeTeria - API</h1>
 </p>
 
 ## Table of Contents
