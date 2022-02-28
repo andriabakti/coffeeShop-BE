@@ -2,11 +2,14 @@
   <h1 align="center">CoffeTeria - API</h1>
 </p>
 
+This is the API for CoffeeTeria, a web-based café or coffee shop application where the customer can be easily orders available foods & beverages in the menu by their own self. This API built with:
+
+- [Node.js](https://nodejs.org/en/)
+- [Express.js](https://expressjs.com/)
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [Introduction](#introduction)
-  - [Built With](#built-with)
 - [Setup for Development](#setup-for-development)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -14,15 +17,6 @@
 - [Related Project](#related-project)
 - [License](#license)
 - [Contact](#contact)
-
-## Introduction
-
-This is the API for CoffeeTeria, a web-based café or coffee shop application where the customer can be easily orders available foods & beverages in the menu by their own self
-
-### Built With
-
-- [Node.js](https://nodejs.org/en/)
-- [Express.js](https://expressjs.com/)
 
 ## Setup for Development
 
