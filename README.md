@@ -1,5 +1,5 @@
 <p align="center">
-  <h3 align="center">CoffeTeria - API</h3>
+  <h1 align="center" style="border-bottom: none">CoffeTeria - API</h1>
 </p>
 
 ## Table of Contents
@@ -65,7 +65,7 @@ CLOUD_SECRET='your_cloudinary_API_secret'
 
 ```
 
-4. Run the app locally in development mode
+4. Make sure you already import the [example database](db-example.sql) to your local database first. Then run the app locally in development mode
 
 ```sh
 npm run dev
@@ -73,7 +73,8 @@ npm run dev
 
 ## API Documentation
 
-You can see & access all the endpoint by importing the collection below to your Postman:</br>
+You can see & access all the endpoint by importing the collection below to your Postman:
+</br>
 [![Run in Postmant](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/bf76bfe66bec5925ebeb)
 
 ## Related Project
