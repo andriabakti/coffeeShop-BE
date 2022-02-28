@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">CoffeTeria - API</h1>
+  <h1 align="center">CoffeeTeria - API</h1>
 </p>
 
 This is the API for CoffeeTeria, a web-based café or coffee shop application where the customer can be easily orders the available foods & beverages in the menu by their own self. This API is built with:
