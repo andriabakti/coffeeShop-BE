@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">CoffeTeria - API</h1>
+  <h3 align="center">CoffeTeria - API</h3>
 </p>
 
 ## Table of Contents
@@ -29,12 +29,12 @@ This is the API for CoffeeTeria, a web-based café or coffee shop application wh
 ### Requirements
 
 - [Node.js](https://nodejs.org/en/download/)
-- [Database](db-example.sql)
-- [Postman](https://www.getpostman.com/) for testing
+- [Database](db-example.sql) (MySQL)
+- [Postman](https://www.getpostman.com/) (for testing)
 
 ### Installation
 
-1. Clone this repository
+1. Clone the repository
 
 ```sh
 git clone https://github.com/andriabakti/coffeeteria-backend.git`
@@ -46,7 +46,7 @@ git clone https://github.com/andriabakti/coffeeteria-backend.git`
 npm install
 ```
 
-3. Create and set .env (Environment Variable) file in your project's root folder
+3. Create .env file in your project's root folder & set all the variables below
 
 ```sh
 # ENV: Port
@@ -73,7 +73,7 @@ npm run dev
 
 ## API Documentation
 
-You can see & access all the endpoint by importing the collection below to your Postman:
+You can see & access all the endpoint by importing the collection below to your Postman:</br>
 [![Run in Postmant](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/bf76bfe66bec5925ebeb)
 
 ## Related Project
