@@ -49,7 +49,7 @@ JWT_KEY='your_jwt_private_key'
 DB_HOST='localhost'
 DB_USER='your_database_user'
 DB_PASSWORD='your_database_password'
-DB_NAME='db_coffeeteria'
+DB_DATABASE='db_coffeeteria'
 # ENV: Cloudinary
 CLOUD_NAME='your_cloudinary_cloud_name'
 CLOUD_KEY='your_cloudinary_API_key'
