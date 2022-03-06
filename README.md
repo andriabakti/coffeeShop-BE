@@ -1,6 +1,6 @@
 <h1 align="center">CoffeeTeria - API</h1>
 
-This is the API for <b>CoffeeTeria</b>, a web-based café or coffee shop application where the customer can be easily orders the available foods & beverages in the menu by their own self. This API is built with:
+This is the API for <b>[CoffeeTeria (Web)](https://github.com/andriabakti/coffeeteria-frontend)</b>, a web-based café or coffee shop application where the customer can be easily orders the available foods & beverages in the menu by their own self. This API is built with:
 
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
@@ -21,7 +21,7 @@ This is the API for <b>CoffeeTeria</b>, a web-based café or coffee shop applica
 ### Requirements
 
 - [Node.js](https://nodejs.org/en/download/)
-- [Database](db-example.sql) (MySQL)
+- [Sample Database](db-sample.sql) (MySQL)
 - [Postman](https://www.getpostman.com/) (for testing)
 
 ### Installation
@@ -46,10 +46,10 @@ PORT='your_port'
 # ENV: JWT
 JWT_KEY='your_jwt_private_key'
 # ENV: Database
-DB_HOST='localhost'
+DB_HOST='your_database_host'
 DB_USER='your_database_user'
 DB_PASSWORD='your_database_password'
-DB_DATABASE='db_coffeeteria'
+DB_DATABASE='your_database_name'
 # ENV: Cloudinary
 CLOUD_NAME='your_cloudinary_cloud_name'
 CLOUD_KEY='your_cloudinary_API_key'
@@ -57,7 +57,7 @@ CLOUD_SECRET='your_cloudinary_API_secret'
 
 ```
 
-4. Make sure you already import the [example database](db-example.sql) to your local database
+4. Make sure you already import the [Sample Database](db-sample.sql) to your local database
 5. Run the app locally in development mode
 
 ```sh
@@ -72,7 +72,7 @@ You can see & access all the endpoint by click the button below to import the co
 
 ## Related Project
 
-- [`CoffeeTeria: Front-end`](https://github.com/andriabakti/coffeeteria-frontend)
+- [CoffeeTeria: Front-end](https://github.com/andriabakti/coffeeteria-frontend)
 
 ## License
 
