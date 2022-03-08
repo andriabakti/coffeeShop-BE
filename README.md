@@ -1,6 +1,6 @@
 <h1 align="center">CoffeeTeria - API</h1>
 
-This is the API for <b>[CoffeeTeria (Web)](https://github.com/andriabakti/coffeeteria-frontend)</b>, a web-based café or coffee shop application where the customer can be easily orders the available foods & beverages in the menu by their own self. This API is built with:
+This is the API for <b>[CoffeeTeria (Web)](https://github.com/andriabakti/coffeeteria-frontend)</b>, a web-based café or coffee shop application where the customer can be easily order the available foods & beverages in the menu by their own self. <b>This API is built with:</b>
 
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
@@ -54,7 +54,6 @@ DB_DATABASE='your_database_name'
 CLOUD_NAME='your_cloudinary_cloud_name'
 CLOUD_KEY='your_cloudinary_API_key'
 CLOUD_SECRET='your_cloudinary_API_secret'
-
 ```
 
 4. Make sure you already import the [Sample Database](db-sample.sql) to your local database
