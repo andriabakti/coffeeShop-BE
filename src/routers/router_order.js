@@ -5,7 +5,7 @@ const {
   createOrder,
   readAllOrder,
   deleteOrder
-} = require('../controllers/controller_history')
+} = require('../controllers/controller_order')
 const {
   verifyAccess
 } = require('../middlewares/midware_auth')

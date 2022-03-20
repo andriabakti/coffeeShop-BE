@@ -4,7 +4,7 @@ const {
   getAllOrder,
   getTotal,
   removeOrder
-} = require('../models/model_history')
+} = require('../models/model_order')
 const { response, message, pageInfo } = require('../helpers/helper_resp')
 
 module.exports = {

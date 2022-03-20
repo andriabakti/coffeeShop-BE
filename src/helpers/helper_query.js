@@ -2,7 +2,7 @@ const conn = require('../configs/config_conn')
 const { errors } = require('./helper_resp')
 
 module.exports = {
-	queryHelper: (...args) => {
+	queryAction: (...args) => {
 		return new Promise((resolve, reject) => {
 			conn.query(...args, (err, res) => {
 				if (!err) {
