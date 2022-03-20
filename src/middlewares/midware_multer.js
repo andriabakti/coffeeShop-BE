@@ -1,6 +1,8 @@
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
-const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const {
+  CloudinaryStorage
+} = require('multer-storage-cloudinary')
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -11,9 +13,11 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'CoffeeTeria'
+    folder: 'app_CoffeeTeria'
   }
 })
 
 // TODO: validasi filename, type & size
-module.exports = multer({ storage: storage }).single('image')
+module.exports = multer({
+  storage: storage
+}).single('image')
