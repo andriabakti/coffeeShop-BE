@@ -3,6 +3,7 @@ const {
   getAllAdmin,
   getUserDetailById,
   modifyUser,
+  modifyUserDetail,
   removeUser
 } = require('../models/model_user')
 const { response } = require('../helpers/helper_resp')
@@ -87,14 +88,14 @@ module.exports = {
       image,
       updated_at: new Date()
     }
-    modifyUser(data, detail, id)
-      .then((result) => {
-        response(res, [], res.statusCode, "User profile updated successfully", null, null)
-      })
-      .catch((error) => {
-        console.log(error)
-        response(res, [], error.statusCode, 'Failed to update user profile', null, error)
-      })
+    try {
+      await modifyUser(data, id)
+      await modifyUserDetail(detail, id)
+      response(res, [], res.statusCode, "User profile updated successfully", null, null)
+    } catch (error) {
+      console.log(error)
+      response(res, [], error.statusCode, 'Failed to update user profile', null, error)
+    }
   },
   deleteUser: (req, res) => {
     const { id } = req.params
