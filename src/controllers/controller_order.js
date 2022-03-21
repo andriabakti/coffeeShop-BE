@@ -1,3 +1,4 @@
+// model: order
 const {
   insertOrderDetail,
   insertOrderItem,
@@ -5,32 +6,36 @@ const {
   getTotal,
   removeOrder
 } = require('../models/model_order')
-const { response, message, pageInfo } = require('../helpers/helper_resp')
+// helper: response
+const {
+  response,
+  pageInfo
+} = require('../helpers/helper_resp')
 
 module.exports = {
   createOrder: (req, res) => {
     const { id, total, payment, items } = req.body
-    const details = {
+    const payload = {
       user_id: id,
       total,
       payment,
       created_at: new Date()
     }
-    insertOrderDetail(details)
+    insertOrderDetail(payload)
       .then((result) => {
-        let order_id = result.insertId
+        let order_id = result.rows[0].id
         insertOrderItem(order_id, id, items)
-          .then((result) => {
-            response(res, {}, res.statusCode, message.insert, null, null)
+          .then((_result) => {
+            response(res, [], res.statusCode, "Order(s) created successfully", null, null)
           })
           .catch((error) => {
             console.log(error);
-            response(res, error, error.status_code, error.message, null, error)
+            response(res, [], error.statusCode, "Failed to create order(s)' item", null, error)
           })
       })
       .catch((error) => {
         console.log(error);
-        response(res, error, error.status_code, error.message, null, error)
+        response(res, [], error.statusCode, "Failed to create order(s)' detail", null, error)
       })
   },
   readAllOrder: (req, res) => {
@@ -39,34 +44,35 @@ module.exports = {
     const page = Number(req.query.page) || 1
     const offset = (page === 0 ? 1 : page - 1) * limit
     const { id } = req.params
+    let totalData
 
     getTotal()
       .then((result) => {
-        totalData = result[0].total
+        totalData = result.rows[0].total
       })
       .catch((error) => {
         console.log(error)
       })
     getAllOrder(order, limit, offset, id)
       .then((result) => {
-        const count = result.length
+        const count = result.rows.length
         const total = parseInt(totalData)
         const links = pageInfo(limit, page, total, count)
-        response(res, result, res.statusCode, message.found, links, null)
+        response(res, result.rows, res.statusCode, "Orders found", links, null)
       })
       .catch((error) => {
         console.log(error)
-        response(res, error, error.status_code, error.message, null, error)
+        response(res, [], error.statusCode, "Orders not found", null, error)
       })
   },
   deleteOrder: (req, res) => {
     const { id } = req.params
     removeOrder(id)
       .then((_result) => {
-        response(res, {}, res.statusCode, message.delete, null, null)
+        response(res, [], res.statusCode, "Order deleted successfully", null, null)
       })
       .catch((error) => {
-        response(res, {}, error.statusCode, null, null, error)
+        response(res, [], error.statusCode, "Failed to delete this order", null, error)
       })
   }
 }

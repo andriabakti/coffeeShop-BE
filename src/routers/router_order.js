@@ -1,14 +1,16 @@
-const express = require('express')
-const router = express.Router()
-
+// package: express
+const { Router } = require('express')
+// middleware: auth
+const { verifyAccess } = require('../middlewares/midware_auth')
+// controller: order
 const {
   createOrder,
   readAllOrder,
   deleteOrder
 } = require('../controllers/controller_order')
-const {
-  verifyAccess
-} = require('../middlewares/midware_auth')
+
+// usage: express-router
+const router = Router()
 
 router
   .post('/', verifyAccess, createOrder)
