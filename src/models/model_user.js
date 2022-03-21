@@ -1,15 +1,16 @@
-const {
-  queryAction
-} = require('../helpers/helper_query')
+// helper: query
+const { queryAction } = require('../helpers/helper_query')
 
 module.exports = {
-  createUser: (data) => {
+  createUser: (payload) => {
     return queryAction(`INSERT INTO "user"
-    VALUES ()`, [data])
+    (username, email, password, phone, role, created_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id `,
+      [payload.username, payload.email, payload.password, payload.phone, payload.role, payload.created_at]
+    )
   },
-  createUserDetail: (data) => {
+  createUserDetail: (payload) => {
     return queryAction(`INSERT INTO "user_detail"
-    VALUES ()`, [data])
+    (user_id, created_at) VALUES ($1, $2)`, [payload.user_id, payload.created_at])
   },
   getAllAdmin: () => {
     return queryAction(`SELECT * FROM "user" WHERE role = admin`)
@@ -22,9 +23,7 @@ module.exports = {
   },
   getUserDetailById: (id) => {
     return queryAction(`SELECT user_detail.*, user.* FROM "user_detail"
-      INNER JOIN "user" ON user_detail.user_id = user.id WHERE user_detail.user_id = ?`,
-      [id]
-    )
+      INNER JOIN "user" ON user_detail.user_id = user.id WHERE user_detail.user_id = $1`, [id])
   },
   modifyUser: (data, detail, id) => {
     const { username, email, phone, updated_at } = data

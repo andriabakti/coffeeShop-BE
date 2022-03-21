@@ -5,51 +5,51 @@ const {
   modifyUser,
   removeUser
 } = require('../models/model_user')
-const { response, message } = require('../helpers/helper_resp')
+const { response } = require('../helpers/helper_resp')
 
 module.exports = {
-  readAllCustomer: (req, res) => {
+  readAllCustomer: (_req, res) => {
     getAllCustomer()
       .then((result) => {
-        result.map((item) => {
+        result.rows.map((item) => {
           delete item.password
           delete item.updated_at
         })
-        response(res, result, res.statusCode, message.found, null, null)
+        response(res, result.rows, res.statusCode, "All customer users found", null, null)
       })
       .catch((error) => {
-        response(res, [], error.statusCode, null, null, error)
+        response(res, [], error.statusCode, "Data not found", null, error)
       })
   },
-  readAllAdmin: (req, res) => {
+  readAllAdmin: (_req, res) => {
     getAllAdmin()
       .then((result) => {
-        result.map((item) => {
+        result.rows.map((item) => {
           delete item.password
           delete item.updated_at
         })
-        response(res, result, res.statusCode, message.found, null, null)
+        response(res, result.rows, res.statusCode, "All admin users found", null, null)
       })
       .catch((error) => {
-        response(res, [], error.statusCode, null, null, error)
+        response(res, [], error.statusCode, "Data not found", null, error)
       })
   },
   readUserDetail: (req, res) => {
     const { id } = req.params
     getUserDetailById(id)
       .then((result) => {
-        result.map((item) => {
+        result.rows.map((item) => {
           delete item.user_id,
             delete item.password,
             delete item.role,
             delete item.created_at,
             delete item.updated_at
         })
-        response(res, result, res.statusCode, message.found, null, null)
+        response(res, result.rows, res.statusCode, "User detail found", null, null)
       })
       .catch((error) => {
         console.log(error);
-        response(res, [], error.status_code, error.message, null, error)
+        response(res, [], error.statusCode, "User detail not found", null, error)
       })
   },
   updateUser: async (req, res) => {
@@ -89,28 +89,21 @@ module.exports = {
     }
     modifyUser(data, detail, id)
       .then((result) => {
-        response(res, {}, res.statusCode, message.update, null, null)
+        response(res, [], res.statusCode, "User profile updated successfully", null, null)
       })
       .catch((error) => {
         console.log(error)
-        response(
-          res,
-          [],
-          error.statusCode,
-          'Profile failed to updated',
-          null,
-          error
-        )
+        response(res, [], error.statusCode, 'Failed to update user profile', null, error)
       })
   },
   deleteUser: (req, res) => {
     const { id } = req.params
     removeUser(id)
-      .then((result) => {
-        response(res, {}, res.statusCode, message.delete, null, null)
+      .then((_result) => {
+        response(res, [], res.statusCode, "User deleted successfully", null, null)
       })
       .catch((error) => {
-        response(res, {}, error.statusCode, null, null, error)
+        response(res, [], error.statusCode, "Failed to delete user", null, error)
       })
   }
 }

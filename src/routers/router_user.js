@@ -1,6 +1,9 @@
-const express = require('express')
-const router = express.Router()
-
+const { Router } = require('express')
+// middleware: auth
+const { verifyAccess } = require('../middlewares/midware_auth')
+// middleware: multer
+const upload = require('../middlewares/midware_multer')
+// controller: user
 const {
   readAllCustomer,
   readAllAdmin,
@@ -8,10 +11,9 @@ const {
   updateUser,
   deleteUser
 } = require('../controllers/controller_user')
-const {
-  verifyAccess
-} = require('../middlewares/midware_auth')
-const upload = require('../middlewares/midware_multer')
+
+// usage: express-router
+const router = Router()
 
 router
   .get('/', readAllCustomer)

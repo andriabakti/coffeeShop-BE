@@ -1,14 +1,15 @@
+// package: bcryptjs
 const bcrypt = require('bcryptjs')
+// package: jsonwebtoken
 const jwt = require('jsonwebtoken')
-
+// model: user
 const {
   createUser,
   createUserDetail,
   getUserByEmail
 } = require('../models/model_user')
-const {
-  response
-} = require('../helpers/helper_resp')
+// helper: response
+const { response } = require('../helpers/helper_resp')
 
 module.exports = {
   // async
@@ -30,16 +31,16 @@ module.exports = {
     createUser(newUser)
       .then((result) => {
         const data = {
-          user_id: result.insertId,
+          user_id: result.rows[0].id,
           created_at: new Date()
         }
         createUserDetail(data)
           .then((_result) => {
-            response(res, {}, res.statusCode, 'Register success', null, null)
+            response(res, [], 201, 'Register success', null, null)
           })
           .catch((error) => {
             console.log(error);
-            response(res, [], error.statusCode, 'Register failed', null, error)
+            response(res, [], error.statusCode, 'Failed to register new user', null, error)
           })
       })
   },
@@ -49,11 +50,11 @@ module.exports = {
       .then((result) => {
         // console.log(result)
         // response
-        // if (!result) return response(res, [], res.status_code, 'Email not found!', null, error)
-        const user = result[0]
+        // if (!result) return response(res, [], res.statusCode, 'Email not found!', null, error)
+        const user = result.rows[0]
         bcrypt.compare(password, user.password)
           .then((resCompare) => {
-            !resCompare && response(res, {}, res.status_code, 'Password is wrong!', null, null)
+            !resCompare && response(res, [], res.statusCode, 'Password is wrong!', null, null)
             const payload = {
               id: user.id,
               username: user.username,
@@ -61,22 +62,22 @@ module.exports = {
               role: user.role
             }
             jwt.sign(
-              payload, process.env.JWT_KEY, { expiresIn: '12h' }, (err, token) => {
+              payload, process.env.JWT_KEY, { expiresIn: '12h' }, (_err, token) => {
                 user.token = token
                 delete user.password
                 delete user.created_at
                 delete user.updated_at
-                response(res, result[0], res.statusCode, 'Login success', null, null)
+                response(res, result.rows[0], res.statusCode, 'Login success', null, null)
               }
             )
           })
         // .catch((error) => {
-        //   response(res, {}, res.statusCode, 'Password is wrong!', null, null)
+        //   response(res, [], res.statusCode, 'Password is wrong!', null, null)
         // })
       })
       .catch((error) => {
         console.log(error)
-        response(res, [], res.status_code, 'User not found', null, error)
+        response(res, [], error.statusCode, 'Failed to login', null, error)
       })
   }
 }
