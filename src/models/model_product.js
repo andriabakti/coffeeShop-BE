@@ -3,9 +3,10 @@ const { queryAction } = require('../helpers/helper_query')
 
 module.exports = {
   insertProduct: (payload) => {
+    const { name, price, description, category_id, image, created_at } = payload
 		return queryAction(`INSERT INTO "product"
 		(name, price, description, category_id, image, created_at) VALUES ($1, $2, $3, $4, $5, $6)`,
-			[payload.name, payload.price, payload.description, payload.category_id, payload.image, payload.created_at])
+			[name, price, description, category_id, image, created_at])
   },
   getAllProduct: (search, filter, sort, order, limit, offset) => {
     let query = ''
@@ -38,9 +39,11 @@ module.exports = {
     )
   },
   editProduct: (payload, id) => {
+    const { name, price, description, category_id, image, updated_at } = payload
 		return queryAction(`UPDATE "product"
-		SET name = $1, price = $2, description = $3, category_id = $4, image = $5, updated_at = $6, WHERE id = $7`,
-			[payload.name, payload.price, payload.description, payload.category_id, payload.image, payload.updated_at, id])
+		SET (name, price, description, category_id, image, updated_at) =
+    ($1, $2, $3, $4, $5, $6) WHERE id = $7`,
+			[name, price, description, category_id, image, updated_at, id])
   },
   removeProduct: (payload, id) => {
 		return queryAction(`UPDATE "product"
