@@ -32,13 +32,14 @@ This is the API for <b>[CoffeeTeria (Web)](https://github.com/andriabakti/coffee
 git clone https://github.com/andriabakti/coffeeteria-backend.git`
 ```
 
-2. Install package dependencies
+2. Change to branch <b>ver-1</b>
+3. Install package dependencies
 
 ```sh
 npm install
 ```
 
-3. Create .env file in your project's root folder & set all the variables below
+4. Create .env file in your project's root folder & set all the variables below. Or you can just copy [Example ENV](.env.example), remove .example in file's name and edit it
 
 ```sh
 # ENV: Port
@@ -56,7 +57,7 @@ CLOUD_KEY='your_cloudinary_API_key'
 CLOUD_SECRET='your_cloudinary_API_secret'
 ```
 
-4. Make sure you already import the [Sample Database](db-sample.sql) to your local database
+4. Make sure you already import the [Sample Database](db-sample-mysql.sql) to your local database
 5. Run the app locally in development mode
 
 ```sh

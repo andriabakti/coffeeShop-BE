@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2022 at 11:58 AM
+-- Generation Time: Mar 21, 2022 at 11:36 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -108,7 +108,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `image`, `description`, `category
 (29, 'Salty Rice', 20000, 'http://localhost:3939/uploads/1645025712425-Wed_Feb_16_2022-22.35.12-Salty_Rice.png', 'This food is named Salty Rice because Salty Rice is Salty Rice', 3, 0, '2022-02-07 01:18:49', '2022-02-16 15:35:12', NULL),
 (30, 'Pinky Promise', 30000, 'http://localhost:3939/uploads/1645025728528-Wed_Feb_16_2022-22.35.28-Pinky_Promise.png', 'This drink is named Pinky Promise because Pinky Promise is Pinky Promise', 2, 0, '2022-02-07 01:19:46', '2022-02-16 15:35:28', NULL),
 (31, 'Chicken Wings', 40000, 'http://localhost:3939/uploads/1645475570300-Tue_Feb_22_2022-03.32.50-Chicken_Wings.png', 'This food is named Chicken Wings because Chicken Wings is Chicken Wings', 3, 0, '2022-02-07 01:20:35', '2022-02-21 20:32:50', NULL),
-(32, 'Cold Brew', 30000, 'http://localhost:3939/uploads/1645025755941-Wed_Feb_16_2022-22.35.55-Cold_Brew.png', 'This drink is named Cold Brew because Cold Brew is Cold Brew', 2, 0, '2022-02-07 01:22:27', '2022-02-16 15:35:55', NULL),
+(32, 'Cold Brew', 15000, 'http://localhost:3939/uploads/1645025755941-Wed_Feb_16_2022-22.35.55-Cold_Brew.png', 'Cold brewing is a method of brewing that combines ground coffee and cool water and uses time instead of heat to extract the flavor. It is brewed in small batches and steeped for as long as 48 hours', 2, 0, '2022-02-07 01:22:27', '2022-02-16 15:35:55', NULL),
 (44, 'Coffee Latte', 15000, 'http://localhost:3939/uploads/1645363787616-Sun_Feb_20_2022-20.29.47-Cofee_Latte.jpg', 'Coffee Latte is named Coffee Latte because Coffee Latte is Coffee Latte', 1, 0, '2022-02-20 13:29:47', NULL, NULL),
 (45, 'Cappucino', 5000, 'http://localhost:3939/uploads/1645363825647-Sun_Feb_20_2022-20.30.25-Cappucino.jpg', 'Cappucino is named Cappucino because Cappucino is Cappucino', 1, 0, '2022-02-20 13:30:25', NULL, NULL),
 (46, 'Red Velvet Latte', 33000, 'http://localhost:3939/uploads/1645363883554-Sun_Feb_20_2022-20.31.23-Red_Velvet_Latte.jpg', 'Red Velvet Latte is named Red Velvet Latte because Red Velvet Latte is Red Velvet Latte', 1, 0, '2022-02-20 13:31:23', NULL, NULL),
