@@ -21,7 +21,7 @@ This is the API for <b>[CoffeeTeria (Web)](https://github.com/andriabakti/coffee
 ### Requirements
 
 - [Node.js](https://nodejs.org/en/download/)
-- [Sample Database](db-sample.sql) (MySQL)
+- [Sample Database](db-sample-pgsql.sql) (PostgreSQL)
 - [Postman](https://www.getpostman.com/) (for testing)
 
 ### Installation
@@ -38,7 +38,7 @@ git clone https://github.com/andriabakti/coffeeteria-backend.git`
 npm install
 ```
 
-3. Create .env file in your project's root folder & set all the variables below
+3. Create .env file in your project's root folder & set all the variables below. Or you can just copy [Example ENV](.env.example), remove .example in file's name and edit it
 
 ```sh
 # ENV: Port
@@ -46,17 +46,18 @@ PORT='your_port'
 # ENV: JWT
 JWT_KEY='your_jwt_private_key'
 # ENV: Database
-DB_HOST='your_database_host'
-DB_USER='your_database_user'
-DB_PASSWORD='your_database_password'
-DB_DATABASE='your_database_name'
+PG_HOST='your_database_host'
+PG_USER='your_database_user'
+PG_PASSWORD='your_database_password'
+PG_DATABASE='your_database_name'
+PG_PORT='your_database_port'
 # ENV: Cloudinary
 CLOUD_NAME='your_cloudinary_cloud_name'
 CLOUD_KEY='your_cloudinary_API_key'
 CLOUD_SECRET='your_cloudinary_API_secret'
 ```
 
-4. Make sure you already import the [Sample Database](db-sample.sql) to your local database
+4. Make sure you already import the [Sample Database](db-sample-pgsql.sql) to your local database
 5. Run the app locally in development mode
 
 ```sh
