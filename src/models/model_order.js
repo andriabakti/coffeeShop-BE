@@ -23,9 +23,9 @@ module.exports = {
   },
   getAllOrder: (order, limit, offset, id) => {
     return queryAction(
-      `SELECT order_item.*, product.* FROM "order_item"
-      INNER JOIN "product" ON order_item.product_id = product.id
-      WHERE order_item.user_id = $1 ORDER BY order_item.id ${order}
+      `SELECT a.*, b.* FROM "order_item" a
+      INNER JOIN "product" b ON a.product_id = b.id
+      WHERE a.user_id = $1 ORDER BY a.id ${order}
       LIMIT $2 OFFSET $3`, [id, limit, offset]
     )
   },

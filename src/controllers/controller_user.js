@@ -32,6 +32,7 @@ module.exports = {
         response(res, result.rows, res.statusCode, "All admin users found", null, null)
       })
       .catch((error) => {
+        console.log(error);
         response(res, [], error.statusCode, "Data not found", null, error)
       })
   },
