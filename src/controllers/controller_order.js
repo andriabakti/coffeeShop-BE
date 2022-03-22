@@ -13,7 +13,7 @@ const {
 } = require('../helpers/helper_resp')
 
 module.exports = {
-  createOrder: (req, res) => {
+  createOrder: async (req, res) => {
     const { id, total, payment, items } = req.body
     const payload = {
       user_id: id,
@@ -21,22 +21,15 @@ module.exports = {
       payment,
       created_at: new Date()
     }
-    insertOrderDetail(payload)
-      .then((result) => {
-        let order_id = result.rows[0].id
-        insertOrderItem(order_id, id, items)
-          .then((_result) => {
-            response(res, [], res.statusCode, "Order(s) created successfully", null, null)
-          })
-          .catch((error) => {
-            console.log(error);
-            response(res, [], error.statusCode, "Failed to create order(s)' item", null, error)
-          })
-      })
-      .catch((error) => {
-        console.log(error);
-        response(res, [], error.statusCode, "Failed to create order(s)' detail", null, error)
-      })
+    try {
+      const detail = await insertOrderDetail(payload)
+      let order_id = detail.rows[0].id
+      await insertOrderItem(order_id, id, items)
+      response(res, [], res.statusCode, "Order(s) created successfully", null, null)
+    } catch (error) {
+      console.log(error);
+      response(res, [], error.statusCode, "Failed to create order(s)", null, error)
+    }
   },
   readAllOrder: (req, res) => {
     const order = req.query.order || 'DESC'

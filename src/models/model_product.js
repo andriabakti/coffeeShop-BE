@@ -11,25 +11,25 @@ module.exports = {
   getAllProduct: (search, filter, sort, order, limit, offset) => {
     let query = ''
     if (search !== '' && filter !== '') {
-      query = `AND name LIKE '%${search}%' AND category_id = ${filter}`
+      query = `AND name ILIKE '%${search}%' AND category_id = ${filter}`
     } else if (search !== '' && filter === '') {
-      query = `AND name LIKE '%${search}%'`
+      query = `AND name ILIKE '%${search}%'`
     } else if (filter !== '' && search === '') {
       query = `AND category_id = ${filter}`
     }
     return queryAction(
-      `SELECT * FROM "product" WHERE is_deleted = yes ${query}
-			ORDER BY $1 ${order} LIMIT $2 OFFSET $3`,
-			[sort, limit, offset]
+      `SELECT * FROM "product" WHERE is_deleted = $1 ${query}
+			ORDER BY $2 ${order} LIMIT $3 OFFSET $4`,
+			[0, sort, limit, offset]
     )
   },
   getProductById: (id) => {
-    return queryAction(`SELECT * FROM "product" WHERE id = $1`, id)
+    return queryAction(`SELECT * FROM "product" WHERE id = $1`, [id])
   },
   getSearch: (search, filter) => {
     return queryAction(
 			`SELECT * FROM "product" WHERE
-			${filter ? `category_id = ${filter} AND` : ''} name LIKE '%${search}%'`
+			${filter ? `category_id = ${filter} AND` : ''} name ILIKE '%${search}%'`
     )
   },
   getTotal: (filter) => {

@@ -34,8 +34,8 @@ module.exports = {
       })
   },
   readAllProduct: (req, res) => {
-    const search = req.query.search
-    const filter = req.query.filter
+    const search = req.query.search || ''
+    const filter = req.query.filter || ''
     const sort = req.query.sort || 'id'
     const order = req.query.order || 'ASC'
     const limit = Number(req.query.limit) || 3
@@ -113,7 +113,7 @@ module.exports = {
   deleteProduct: (req, res) => {
     const { id } = req.params
     const data = {
-      is_deleted: 'yes',
+      is_deleted: 1,
       deleted_at: new Date()
     }
     removeProduct(data, id)
